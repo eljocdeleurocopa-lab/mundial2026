@@ -1,0 +1,80 @@
+[
+  {"model": "joc.grup", "pk": 1,  "fields": {"nom": "A"}},
+  {"model": "joc.grup", "pk": 2,  "fields": {"nom": "B"}},
+  {"model": "joc.grup", "pk": 3,  "fields": {"nom": "C"}},
+  {"model": "joc.grup", "pk": 4,  "fields": {"nom": "D"}},
+  {"model": "joc.grup", "pk": 5,  "fields": {"nom": "E"}},
+  {"model": "joc.grup", "pk": 6,  "fields": {"nom": "F"}},
+  {"model": "joc.grup", "pk": 7,  "fields": {"nom": "G"}},
+  {"model": "joc.grup", "pk": 8,  "fields": {"nom": "H"}},
+  {"model": "joc.grup", "pk": 9,  "fields": {"nom": "I"}},
+  {"model": "joc.grup", "pk": 10, "fields": {"nom": "J"}},
+  {"model": "joc.grup", "pk": 11, "fields": {"nom": "K"}},
+  {"model": "joc.grup", "pk": 12, "fields": {"nom": "L"}},
+  {"model": "joc.grup", "pk": 13, "fields": {"nom": "M"}},
+  {"model": "joc.grup", "pk": 14, "fields": {"nom": "N"}},
+  {"model": "joc.grup", "pk": 15, "fields": {"nom": "O"}},
+  {"model": "joc.grup", "pk": 16, "fields": {"nom": "P"}},
+  {"model": "joc.grup", "pk": 17, "fields": {"nom": "Q"}},
+  {"model": "joc.grup", "pk": 18, "fields": {"nom": "R"}},
+
+  {"model": "joc.equip", "pk": 1,  "fields": {"nom": "Mèxic",           "bandera": "mx.png", "grup": 1}},
+  {"model": "joc.equip", "pk": 2,  "fields": {"nom": "Sud-àfrica",      "bandera": "za.png", "grup": 1}},
+  {"model": "joc.equip", "pk": 3,  "fields": {"nom": "Corea del Sud",   "bandera": "kr.png", "grup": 1}},
+  {"model": "joc.equip", "pk": 4,  "fields": {"nom": "República Txeca", "bandera": "cz.png", "grup": 1}},
+
+  {"model": "joc.equip", "pk": 5,  "fields": {"nom": "Canadà",          "bandera": "ca.png", "grup": 2}},
+  {"model": "joc.equip", "pk": 6,  "fields": {"nom": "Suïssa",          "bandera": "ch.png", "grup": 2}},
+  {"model": "joc.equip", "pk": 7,  "fields": {"nom": "Qatar",           "bandera": "qa.png", "grup": 2}},
+  {"model": "joc.equip", "pk": 8,  "fields": {"nom": "Bòsnia i Hercegovina", "bandera": "ba.png", "grup": 2}},
+
+  {"model": "joc.equip", "pk": 9,  "fields": {"nom": "Brasil",          "bandera": "br.png", "grup": 3}},
+  {"model": "joc.equip", "pk": 10, "fields": {"nom": "Marroc",          "bandera": "ma.png", "grup": 3}},
+  {"model": "joc.equip", "pk": 11, "fields": {"nom": "Escòcia",         "bandera": "gb-sct.png", "grup": 3}},
+  {"model": "joc.equip", "pk": 12, "fields": {"nom": "Haití",           "bandera": "ht.png", "grup": 3}},
+
+  {"model": "joc.equip", "pk": 13, "fields": {"nom": "Estats Units",    "bandera": "us.png", "grup": 4}},
+  {"model": "joc.equip", "pk": 14, "fields": {"nom": "Paraguai",        "bandera": "py.png", "grup": 4}},
+  {"model": "joc.equip", "pk": 15, "fields": {"nom": "Austràlia",       "bandera": "au.png", "grup": 4}},
+  {"model": "joc.equip", "pk": 16, "fields": {"nom": "Turquia",         "bandera": "tr.png", "grup": 4}},
+
+  {"model": "joc.equip", "pk": 17, "fields": {"nom": "Alemanya",        "bandera": "de.png", "grup": 5}},
+  {"model": "joc.equip", "pk": 18, "fields": {"nom": "Curaçao",         "bandera": "cw.png", "grup": 5}},
+  {"model": "joc.equip", "pk": 19, "fields": {"nom": "Costa d'Ivori",   "bandera": "ci.png", "grup": 5}},
+  {"model": "joc.equip", "pk": 20, "fields": {"nom": "Equador",         "bandera": "ec.png", "grup": 5}},
+
+  {"model": "joc.equip", "pk": 21, "fields": {"nom": "Països Baixos",   "bandera": "nl.png", "grup": 6}},
+  {"model": "joc.equip", "pk": 22, "fields": {"nom": "Japó",            "bandera": "jp.png", "grup": 6}},
+  {"model": "joc.equip", "pk": 23, "fields": {"nom": "Tunísia",         "bandera": "tn.png", "grup": 6}},
+  {"model": "joc.equip", "pk": 24, "fields": {"nom": "Rep. Playoff UEFA-F", "bandera": "uefa.png", "grup": 6}},
+
+  {"model": "joc.equip", "pk": 25, "fields": {"nom": "Bèlgica",         "bandera": "be.png", "grup": 7}},
+  {"model": "joc.equip", "pk": 26, "fields": {"nom": "Egipte",          "bandera": "eg.png", "grup": 7}},
+  {"model": "joc.equip", "pk": 27, "fields": {"nom": "Iran",            "bandera": "ir.png", "grup": 7}},
+  {"model": "joc.equip", "pk": 28, "fields": {"nom": "Nova Zelanda",    "bandera": "nz.png", "grup": 7}},
+
+  {"model": "joc.equip", "pk": 29, "fields": {"nom": "Espanya",         "bandera": "es.png", "grup": 8}},
+  {"model": "joc.equip", "pk": 30, "fields": {"nom": "Cap Verd",        "bandera": "cv.png", "grup": 8}},
+  {"model": "joc.equip", "pk": 31, "fields": {"nom": "Aràbia Saudita",  "bandera": "sa.png", "grup": 8}},
+  {"model": "joc.equip", "pk": 32, "fields": {"nom": "Uruguai",         "bandera": "uy.png", "grup": 8}},
+
+  {"model": "joc.equip", "pk": 33, "fields": {"nom": "França",          "bandera": "fr.png", "grup": 9}},
+  {"model": "joc.equip", "pk": 34, "fields": {"nom": "Senegal",         "bandera": "sn.png", "grup": 9}},
+  {"model": "joc.equip", "pk": 35, "fields": {"nom": "Noruega",         "bandera": "no.png", "grup": 9}},
+  {"model": "joc.equip", "pk": 36, "fields": {"nom": "Rep. Playoff UEFA-B", "bandera": "uefa.png", "grup": 9}},
+
+  {"model": "joc.equip", "pk": 37, "fields": {"nom": "Argentina",       "bandera": "ar.png", "grup": 10}},
+  {"model": "joc.equip", "pk": 38, "fields": {"nom": "Algèria",         "bandera": "dz.png", "grup": 10}},
+  {"model": "joc.equip", "pk": 39, "fields": {"nom": "Àustria",         "bandera": "at.png", "grup": 10}},
+  {"model": "joc.equip", "pk": 40, "fields": {"nom": "Jordània",        "bandera": "jo.png", "grup": 10}},
+
+  {"model": "joc.equip", "pk": 41, "fields": {"nom": "Portugal",        "bandera": "pt.png", "grup": 11}},
+  {"model": "joc.equip", "pk": 42, "fields": {"nom": "Colòmbia",        "bandera": "co.png", "grup": 11}},
+  {"model": "joc.equip", "pk": 43, "fields": {"nom": "Uzbekistan",      "bandera": "uz.png", "grup": 11}},
+  {"model": "joc.equip", "pk": 44, "fields": {"nom": "Rep. Playoff Inter-C", "bandera": "fifa.png", "grup": 11}},
+
+  {"model": "joc.equip", "pk": 45, "fields": {"nom": "Anglaterra",      "bandera": "gb-eng.png", "grup": 12}},
+  {"model": "joc.equip", "pk": 46, "fields": {"nom": "Croàcia",         "bandera": "hr.png", "grup": 12}},
+  {"model": "joc.equip", "pk": 47, "fields": {"nom": "Ghana",           "bandera": "gh.png", "grup": 12}},
+  {"model": "joc.equip", "pk": 48, "fields": {"nom": "Panamà",          "bandera": "pa.png", "grup": 12}}
+]

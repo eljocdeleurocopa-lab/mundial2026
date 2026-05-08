@@ -1,11 +1,14 @@
 {% extends "joc/base.html" %}
+
 {% load i18n %}
+
 {% load static %}
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/estil_usuaris.css" %}">
 {% endblock stylesheets %}
+
 {% block scripts %}
 <script src="{% static "js/funcions.js" %}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/underscore@1.13.0/underscore-umd-min.js"></script>
@@ -20,166 +23,272 @@
 
 {% block content %}
 <div class="requadre">
-<h1>Puntuacions</h1>
-<div class="tot">
-<h2>Fase prèvia</h2>
-</div>
-<div class="esquerra">
-<h4>Partits</h4>
-<ul>
-    <li>Signe: 3 punts</li>
-    <li>Resultat: 4 punts</li>
-</ul>
-</div>
-<div class="dreta">
-<h4>Classificació grups</h4>
-<p>Per cada grup:</p>
-<table class="tauleta">
-    <tr>
+  <h1>Puntuacions</h1>
+
+  <!-- ===== FASE DE GRUPS ===== -->
+  <div class="tot">
+    <h2>Fase prèvia</h2>
+  </div>
+
+  <div class="esquerra">
+    <h4>Partits</h4>
+    <ul>
+      <li>Signe: 3 punts</li>
+      <li>Resultat: 4 punts</li>
+    </ul>
+  </div>
+
+  <div class="dreta">
+    <h4>Classificació grups</h4>
+    <p>Per cada grup:</p>
+    <table class="tauleta">
+      <tr>
         <td><b>Equips en posició correcta</b></td>
         <td><b>Punts</b></td>
-    </tr>
-    <tr>
-        <td>1</td><td>2</td>
-    </tr>
-    <tr>
-        <td>2</td><td>4</td>
-    </tr>
-    <tr>
-        <td>4</td><td>10</td>
-    </tr>
-</table>
-</div>
-<div class="tot">
-<h2>Vuitens de final</h2>
-</div>
-<div class="esquerra">
-<h4>Equips classificats</h4>
-<table class="tauleta">
-    <tr>
+      </tr>
+      <tr><td>1</td><td>2</td></tr>
+      <tr><td>2</td><td>4</td></tr>
+      <tr><td>4</td><td>10</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== SETZENS DE FINAL (nova ronda) ===== -->
+  <div class="tot">
+    <h2>Setzens de final</h2>
+  </div>
+
+  <div class="esquerra">
+    <h4>Equips classificats</h4>
+    <table class="tauleta">
+      <tr>
         <td><b>Número d'equips encertats</b></td>
         <td><b>Punts</b></td>
-    </tr>
-    <tr><td>1</td><td>1</td></tr>
-    <tr><td>2</td><td>2</td></tr>
-    <tr><td>3</td><td>3</td></tr>
-    <tr><td>4</td><td>4</td></tr>
-    <tr><td>5</td><td>5</td></tr>
-    <tr><td>6</td><td>6</td></tr>
-    <tr><td>7</td><td>8</td></tr>
-    <tr><td>8</td><td>11</td></tr>
-    <tr><td>9</td><td>15</td></tr>
-    <tr><td>10</td><td>20</td></tr>
-    <tr><td>11</td><td>26</td></tr>
-    <tr><td>12</td><td>33</td></tr>
-    <tr><td>13</td><td>41</td></tr>
-    <tr><td>14</td><td>50</td></tr>
-    <tr><td>15</td><td>60</td></tr>
-    <tr><td>16</td><td>75</td></tr>
-</table>
-</div>
-<div class="dreta">
-<h4>Partits</h4>
-<ul>
-    <li>Signe: 5 punts</li>
-    <li>Resultat: 7 punts</li>
-    <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
-</ul>
-</div>
-<div class="tot">
-<h2>Quarts de final</h2>
-</div>
-<div class="esquerra">
-<h4>Equips classificats</h4>
-<table class="tauleta">
-    <tr>
+      </tr>
+      <tr><td>1</td><td>1</td></tr>
+      <tr><td>2</td><td>1</td></tr>
+      <tr><td>3</td><td>1</td></tr>
+      <tr><td>4</td><td>1</td></tr>
+      <tr><td>5</td><td>1</td></tr>
+      <tr><td>6</td><td>1</td></tr>
+      <tr><td>7</td><td>2</td></tr>
+      <tr><td>8</td><td>2</td></tr>
+      <tr><td>9</td><td>2</td></tr>
+      <tr><td>10</td><td>2</td></tr>
+      <tr><td>11</td><td>2</td></tr>
+      <tr><td>12</td><td>4</td></tr>
+      <tr><td>13</td><td>4</td></tr>
+      <tr><td>14</td><td>4</td></tr>
+      <tr><td>15</td><td>4</td></tr>
+      <tr><td>16</td><td>7</td></tr>
+      <tr><td>17</td><td>7</td></tr>
+      <tr><td>18</td><td>7</td></tr>
+      <tr><td>19</td><td>10</td></tr>
+      <tr><td>20</td><td>10</td></tr>
+      <tr><td>21</td><td>14</td></tr>
+      <tr><td>22</td><td>18</td></tr>
+      <tr><td>23</td><td>22</td></tr>
+      <tr><td>24</td><td>26</td></tr>
+      <tr><td>25</td><td>30</td></tr>
+      <tr><td>26</td><td>35</td></tr>
+      <tr><td>27</td><td>40</td></tr>
+      <tr><td>28</td><td>45</td></tr>
+      <tr><td>29</td><td>51</td></tr>
+      <tr><td>30</td><td>57</td></tr>
+      <tr><td>31</td><td>63</td></tr>
+      <tr><td>32</td><td>75</td></tr>
+    </table>
+  </div>
+
+  <div class="dreta">
+    <h4>Partits</h4>
+    <ul>
+      <li>Signe: 5 punts</li>
+      <li>Resultat: 7 punts</li>
+      <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
+    </ul>
+  </div>
+
+  <!-- ===== VUITENS DE FINAL ===== -->
+  <div class="tot">
+    <h2>Vuitens de final</h2>
+  </div>
+
+  <div class="esquerra">
+    <h4>Equips classificats</h4>
+    <table class="tauleta">
+      <tr>
         <td><b>Número d'equips encertats</b></td>
         <td><b>Punts</b></td>
-    </tr>
-    <tr><td>1</td><td>3</td></tr>
-    <tr><td>2</td><td>6</td></tr>
-    <tr><td>3</td><td>10</td></tr>
-    <tr><td>4</td><td>17</td></tr>
-    <tr><td>5</td><td>27</td></tr>
-    <tr><td>6</td><td>40</td></tr>
-    <tr><td>7</td><td>55</td></tr>
-    <tr><td>8</td><td>75</td></tr>
-</table>
-</div>
-<div class="dreta">
-<h4>Partits</h4>
-<ul>
-    <li>Equip en posició correcta: 5 punts</li>
-    <li>Signe: 7 punts</li>
-    <li>Resultat: 10 punts</li>
-    <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
-</ul>
-</div>
-<div class="tot">
-<h2>Semifinals</h2>
-</div>
-<div class="esquerra">
-<h4>Equips classificats</h4>
-<table class="tauleta">
-    <tr>
+      </tr>
+      <tr><td>1</td><td>1</td></tr>
+      <tr><td>2</td><td>2</td></tr>
+      <tr><td>3</td><td>3</td></tr>
+      <tr><td>4</td><td>4</td></tr>
+      <tr><td>5</td><td>5</td></tr>
+      <tr><td>6</td><td>6</td></tr>
+      <tr><td>7</td><td>8</td></tr>
+      <tr><td>8</td><td>11</td></tr>
+      <tr><td>9</td><td>15</td></tr>
+      <tr><td>10</td><td>20</td></tr>
+      <tr><td>11</td><td>26</td></tr>
+      <tr><td>12</td><td>33</td></tr>
+      <tr><td>13</td><td>41</td></tr>
+      <tr><td>14</td><td>50</td></tr>
+      <tr><td>15</td><td>60</td></tr>
+      <tr><td>16</td><td>75</td></tr>
+    </table>
+  </div>
+
+  <div class="dreta">
+    <h4>Partits</h4>
+    <ul>
+      <li>Signe: 5 punts</li>
+      <li>Resultat: 7 punts</li>
+      <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
+    </ul>
+  </div>
+
+  <!-- ===== QUARTS DE FINAL ===== -->
+  <div class="tot">
+    <h2>Quarts de final</h2>
+  </div>
+
+  <div class="esquerra">
+    <h4>Equips classificats</h4>
+    <table class="tauleta">
+      <tr>
         <td><b>Número d'equips encertats</b></td>
         <td><b>Punts</b></td>
-    </tr>
-    <tr><td>1</td><td>8</td></tr>
-    <tr><td>2</td><td>20</td></tr>
-    <tr><td>3</td><td>40</td></tr>
-    <tr><td>4</td><td>75</td></tr>
-</table>
-</div>
-<div class="dreta">
-<h4>Partits</h4>
-<ul>
-    <li>Equip en posició correcta: 10 punts</li>
-    <li>Signe: 10 punts</li>
-    <li>Resultat: 14 punts</li>
-    <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
-</ul>
-</div>
-<div class="tot">
-<h2>Final</h2>
-</div>
-<div class="esquerra">
-<h4>Equips classificats</h4>
-<table class="tauleta">
-    <tr>
+      </tr>
+      <tr><td>1</td><td>3</td></tr>
+      <tr><td>2</td><td>6</td></tr>
+      <tr><td>3</td><td>10</td></tr>
+      <tr><td>4</td><td>17</td></tr>
+      <tr><td>5</td><td>27</td></tr>
+      <tr><td>6</td><td>40</td></tr>
+      <tr><td>7</td><td>55</td></tr>
+      <tr><td>8</td><td>75</td></tr>
+    </table>
+  </div>
+
+  <div class="dreta">
+    <h4>Partits</h4>
+    <ul>
+      <li>Equip en posició correcta: 5 punts</li>
+      <li>Signe: 7 punts</li>
+      <li>Resultat: 10 punts</li>
+      <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
+    </ul>
+  </div>
+
+  <!-- ===== SEMIFINALS ===== -->
+  <div class="tot">
+    <h2>Semifinals</h2>
+  </div>
+
+  <div class="esquerra">
+    <h4>Equips classificats</h4>
+    <table class="tauleta">
+      <tr>
         <td><b>Número d'equips encertats</b></td>
         <td><b>Punts</b></td>
-    </tr>
-    <tr><td>1</td><td>30</td></tr>
-    <tr><td>2</td><td>75</td></tr>
-</table>
-</div>
-<div class="dreta">
-<h4>Partit</h4>
-<ul>
-    <li>Equip en posició correcta: 10 punts</li>
-    <li>Signe: 14 punts</li>
-    <li>Resultat: 20 punts</li>
-    <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
-</ul>
-</div>
-<div class="tot">
-<h2>Quadre final</h2>
-</div>
-<table class="tauleta">
-    <tr>
-        <td><b>Posició</b></td>
+      </tr>
+      <tr><td>1</td><td>8</td></tr>
+      <tr><td>2</td><td>20</td></tr>
+      <tr><td>3</td><td>40</td></tr>
+      <tr><td>4</td><td>75</td></tr>
+    </table>
+  </div>
+
+  <div class="dreta">
+    <h4>Partits</h4>
+    <ul>
+      <li>Equip en posició correcta: 10 punts</li>
+      <li>Signe: 10 punts</li>
+      <li>Resultat: 14 punts</li>
+      <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
+    </ul>
+  </div>
+
+  <!-- ===== TERCER I QUART LLOC ===== -->
+  <div class="tot">
+    <h2>Tercer i quart lloc</h2>
+  </div>
+
+  <div class="esquerra">
+    <h4>Equips classificats</h4>
+    <table class="tauleta">
+      <tr>
+        <td><b>Número d'equips encertats</b></td>
         <td><b>Punts</b></td>
+      </tr>
+      <tr><td>1</td><td>15</td></tr>
+      <tr><td>2</td><td>40</td></tr>
+    </table>
+  </div>
+
+  <div class="dreta">
+    <h4>Partit</h4>
+    <ul>
+      <li>Equip en posició correcta: 10 punts</li>
+      <li>Signe: 14 punts</li>
+      <li>Resultat: 20 punts</li>
+      <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
+    </ul>
+  </div>
+
+  <!-- ===== FINAL ===== -->
+  <div class="tot">
+    <h2>Final</h2>
+  </div>
+
+  <div class="esquerra">
+    <h4>Equips classificats</h4>
+    <table class="tauleta">
+      <tr>
+        <td><b>Número d'equips encertats</b></td>
+        <td><b>Punts</b></td>
+      </tr>
+      <tr><td>1</td><td>30</td></tr>
+      <tr><td>2</td><td>75</td></tr>
+    </table>
+  </div>
+
+  <div class="dreta">
+    <h4>Partit</h4>
+    <ul>
+      <li>Equip en posició correcta: 10 punts</li>
+      <li>Signe: 14 punts</li>
+      <li>Resultat: 20 punts</li>
+      <li><b>Nota:</b> Per puntuar per signe o resultat cal encertar els 2 equips del partit en la posició correcta</li>
+    </ul>
+  </div>
+
+  <!-- ===== QUADRE FINAL ===== -->
+  <div class="tot">
+    <h2>Quadre final</h2>
+  </div>
+
+  <table class="tauleta">
+    <tr>
+      <td><b>Posició</b></td>
+      <td><b>Punts</b></td>
     </tr>
     <tr><td>Primer</td><td>50</td></tr>
     <tr><td>Segon</td><td>25</td></tr>
-</table>
-<div class="tot">
-<h2>Notes</h2>
-<ul>
-    <li>La puntuació per la classificació de grups es calcularà després de l'últim partit de la fase de grups.</li>
-    <li>Els signe dels partits de les fases eliminatòries serà el del final dels 90 minuts.</li>
-</ul>
-</div>
+    <tr><td>Tercer</td><td>15</td></tr>
+    <tr><td>Quart</td><td>10</td></tr>
+  </table>
+
+  <!-- ===== NOTES ===== -->
+  <div class="tot">
+    <h2>Notes</h2>
+    <ul>
+      <li>La puntuació per la classificació de grups es calcularà després de l'últim partit de la fase de grups.</li>
+      <li>El signe dels partits de les fases eliminatòries serà el del final dels 90 minuts.</li>
+      <li>Tots els pronòstics s'han d'introduir abans de l'inici del Mundial. Un cop arrancat, no es poden modificar.</li>
+    </ul>
+  </div>
+
 </div>
 {% endblock %}

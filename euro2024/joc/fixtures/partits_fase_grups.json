@@ -1,0 +1,95 @@
+[
+  {"model": "joc.equip", "pk": 24, "fields": {"nom": "Suècia",                    "bandera": "se.png", "grup": 6}},
+  {"model": "joc.equip", "pk": 35, "fields": {"nom": "Iraq",                       "bandera": "iq.png", "grup": 9}},
+  {"model": "joc.equip", "pk": 44, "fields": {"nom": "Rep. Dem. del Congo",        "bandera": "cd.png", "grup": 11}},
+
+  {"model": "joc.partit", "pk": 1,  "fields": {"equip1": 1,  "equip2": 2,  "diaihora": "2026-06-11T21:00:00-05:00", "estadi": 1,  "grup": 1,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 2,  "fields": {"equip1": 3,  "equip2": 4,  "diaihora": "2026-06-12T02:00:00-05:00", "estadi": 2,  "grup": 1,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 3,  "fields": {"equip1": 5,  "equip2": 8,  "diaihora": "2026-06-12T15:00:00-05:00", "estadi": 4,  "grup": 2,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 4,  "fields": {"equip1": 13, "equip2": 14, "diaihora": "2026-06-12T21:00:00-07:00", "estadi": 6,  "grup": 4,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 5,  "fields": {"equip1": 7,  "equip2": 6,  "diaihora": "2026-06-13T15:00:00-05:00", "estadi": 5,  "grup": 2,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 6,  "fields": {"equip1": 9,  "equip2": 10, "diaihora": "2026-06-13T18:00:00-05:00", "estadi": 16, "grup": 3,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 7,  "fields": {"equip1": 37, "equip2": 38, "diaihora": "2026-06-13T21:00:00-06:00", "estadi": 11, "grup": 10, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 8,  "fields": {"equip1": 39, "equip2": 40, "diaihora": "2026-06-14T00:00:00-08:00", "estadi": 7,  "grup": 10, "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 9,  "fields": {"equip1": 41, "equip2": 44, "diaihora": "2026-06-14T13:00:00-06:00", "estadi": 10, "grup": 11, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 10, "fields": {"equip1": 45, "equip2": 46, "diaihora": "2026-06-14T16:00:00-06:00", "estadi": 9,  "grup": 12, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 11, "fields": {"equip1": 47, "equip2": 48, "diaihora": "2026-06-14T19:00:00-05:00", "estadi": 4,  "grup": 12, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 12, "fields": {"equip1": 43, "equip2": 42, "diaihora": "2026-06-14T22:00:00-06:00", "estadi": 1,  "grup": 11, "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 13, "fields": {"equip1": 29, "equip2": 30, "diaihora": "2026-06-15T12:00:00-05:00", "estadi": 12, "grup": 8,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 14, "fields": {"equip1": 25, "equip2": 26, "diaihora": "2026-06-15T15:00:00-08:00", "estadi": 8,  "grup": 7,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 15, "fields": {"equip1": 31, "equip2": 32, "diaihora": "2026-06-15T18:00:00-05:00", "estadi": 13, "grup": 8,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 16, "fields": {"equip1": 27, "equip2": 28, "diaihora": "2026-06-15T21:00:00-07:00", "estadi": 6,  "grup": 7,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 17, "fields": {"equip1": 33, "equip2": 34, "diaihora": "2026-06-16T15:00:00-05:00", "estadi": 16, "grup": 9,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 18, "fields": {"equip1": 35, "equip2": 36, "diaihora": "2026-06-16T18:00:00-05:00", "estadi": 15, "grup": 9,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 19, "fields": {"equip1": 4,  "equip2": 2,  "diaihora": "2026-06-18T12:00:00-05:00", "estadi": 12, "grup": 1,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 20, "fields": {"equip1": 17, "equip2": 18, "diaihora": "2026-06-18T16:00:00-05:00", "estadi": 4,  "grup": 5,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 21, "fields": {"equip1": 20, "equip2": 18, "diaihora": "2026-06-18T20:00:00-06:00", "estadi": 11, "grup": 5,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 22, "fields": {"equip1": 21, "equip2": 24, "diaihora": "2026-06-19T13:00:00-06:00", "estadi": 10, "grup": 6,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 23, "fields": {"equip1": 22, "equip2": 23, "diaihora": "2026-06-19T16:00:00-06:00", "estadi": 3,  "grup": 6,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 24, "fields": {"equip1": 15, "equip2": 13, "diaihora": "2026-06-19T15:00:00-08:00", "estadi": 8,  "grup": 4,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 25, "fields": {"equip1": 11, "equip2": 10, "diaihora": "2026-06-20T18:00:00-05:00", "estadi": 15, "grup": 3,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 26, "fields": {"equip1": 9,  "equip2": 12, "diaihora": "2026-06-20T20:30:00-05:00", "estadi": 14, "grup": 3,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 27, "fields": {"equip1": 16, "equip2": 14, "diaihora": "2026-06-20T23:00:00-08:00", "estadi": 7,  "grup": 4,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 28, "fields": {"equip1": 29, "equip2": 31, "diaihora": "2026-06-21T12:00:00-05:00", "estadi": 12, "grup": 8,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 29, "fields": {"equip1": 5,  "equip2": 7,  "diaihora": "2026-06-21T18:00:00-08:00", "estadi": 5,  "grup": 2,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 30, "fields": {"equip1": 25, "equip2": 27, "diaihora": "2026-06-21T21:00:00-05:00", "estadi": 13, "grup": 7,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 31, "fields": {"equip1": 19, "equip2": 17, "diaihora": "2026-06-22T16:00:00-05:00", "estadi": 4,  "grup": 5,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 32, "fields": {"equip1": 26, "equip2": 28, "diaihora": "2026-06-22T12:00:00-07:00", "estadi": 6,  "grup": 7,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 33, "fields": {"equip1": 33, "equip2": 35, "diaihora": "2026-06-22T19:00:00-06:00", "estadi": 11, "grup": 9,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 34, "fields": {"equip1": 36, "equip2": 34, "diaihora": "2026-06-22T22:00:00-06:00", "estadi": 3,  "grup": 9,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 35, "fields": {"equip1": 1,  "equip2": 3,  "diaihora": "2026-06-23T21:00:00-07:00", "estadi": 2,  "grup": 1,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 36, "fields": {"equip1": 37, "equip2": 39, "diaihora": "2026-06-23T15:00:00-05:00", "estadi": 10, "grup": 10, "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 37, "fields": {"equip1": 38, "equip2": 40, "diaihora": "2026-06-23T18:00:00-05:00", "estadi": 13, "grup": 10, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 38, "fields": {"equip1": 41, "equip2": 43, "diaihora": "2026-06-23T19:00:00-06:00", "estadi": 9,  "grup": 11, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 39, "fields": {"equip1": 42, "equip2": 44, "diaihora": "2026-06-23T22:00:00-06:00", "estadi": 1,  "grup": 11, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 40, "fields": {"equip1": 21, "equip2": 22, "diaihora": "2026-06-24T13:00:00-06:00", "estadi": 3,  "grup": 6,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 41, "fields": {"equip1": 23, "equip2": 24, "diaihora": "2026-06-24T16:00:00-06:00", "estadi": 2,  "grup": 6,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 42, "fields": {"equip1": 10, "equip2": 12, "diaihora": "2026-06-24T18:00:00-05:00", "estadi": 12, "grup": 3,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 43, "fields": {"equip1": 11, "equip2": 9,  "diaihora": "2026-06-24T18:00:00-05:00", "estadi": 16, "grup": 3,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 44, "fields": {"equip1": 32, "equip2": 30, "diaihora": "2026-06-24T21:00:00-05:00", "estadi": 13, "grup": 8,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 45, "fields": {"equip1": 45, "equip2": 47, "diaihora": "2026-06-25T15:00:00-06:00", "estadi": 9,  "grup": 12, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 46, "fields": {"equip1": 48, "equip2": 46, "diaihora": "2026-06-25T15:00:00-06:00", "estadi": 10, "grup": 12, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 47, "fields": {"equip1": 15, "equip2": 16, "diaihora": "2026-06-25T18:00:00-06:00", "estadi": 11, "grup": 4,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 48, "fields": {"equip1": 13, "equip2": 14, "diaihora": "2026-06-25T18:00:00-08:00", "estadi": 8,  "grup": 4,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 49, "fields": {"equip1": 6,  "equip2": 8,  "diaihora": "2026-06-25T21:00:00-08:00", "estadi": 6,  "grup": 2,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 50, "fields": {"equip1": 5,  "equip2": 7,  "diaihora": "2026-06-25T21:00:00-05:00", "estadi": 5,  "grup": 2,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 51, "fields": {"equip1": 2,  "equip2": 3,  "diaihora": "2026-06-26T18:00:00-06:00", "estadi": 2,  "grup": 1,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 52, "fields": {"equip1": 4,  "equip2": 1,  "diaihora": "2026-06-26T18:00:00-06:00", "estadi": 3,  "grup": 1,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 53, "fields": {"equip1": 17, "equip2": 19, "diaihora": "2026-06-26T18:00:00-05:00", "estadi": 4,  "grup": 5,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 54, "fields": {"equip1": 20, "equip2": 18, "diaihora": "2026-06-26T18:00:00-06:00", "estadi": 11, "grup": 5,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 55, "fields": {"equip1": 26, "equip2": 27, "diaihora": "2026-06-26T21:00:00-07:00", "estadi": 6,  "grup": 7,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 56, "fields": {"equip1": 28, "equip2": 25, "diaihora": "2026-06-26T21:00:00-08:00", "estadi": 7,  "grup": 7,  "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 57, "fields": {"equip1": 30, "equip2": 31, "diaihora": "2026-06-27T15:00:00-05:00", "estadi": 14, "grup": 8,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 58, "fields": {"equip1": 32, "equip2": 29, "diaihora": "2026-06-27T15:00:00-05:00", "estadi": 13, "grup": 8,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 59, "fields": {"equip1": 44, "equip2": 43, "diaihora": "2026-06-27T19:30:00-05:00", "estadi": 12, "grup": 11, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 60, "fields": {"equip1": 41, "equip2": 42, "diaihora": "2026-06-27T19:30:00-05:00", "estadi": 15, "grup": 11, "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 61, "fields": {"equip1": 34, "equip2": 36, "diaihora": "2026-06-27T21:00:00-06:00", "estadi": 3,  "grup": 9,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 62, "fields": {"equip1": 35, "equip2": 33, "diaihora": "2026-06-27T21:00:00-06:00", "estadi": 2,  "grup": 9,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 63, "fields": {"equip1": 38, "equip2": 39, "diaihora": "2026-06-27T21:00:00-06:00", "estadi": 9,  "grup": 10, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 64, "fields": {"equip1": 40, "equip2": 37, "diaihora": "2026-06-27T21:00:00-06:00", "estadi": 10, "grup": 10, "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 65, "fields": {"equip1": 22, "equip2": 24, "diaihora": "2026-06-28T15:00:00-05:00", "estadi": 14, "grup": 6,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 66, "fields": {"equip1": 21, "equip2": 23, "diaihora": "2026-06-28T15:00:00-06:00", "estadi": 11, "grup": 6,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 67, "fields": {"equip1": 45, "equip2": 48, "diaihora": "2026-06-28T21:00:00-05:00", "estadi": 15, "grup": 12, "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 68, "fields": {"equip1": 46, "equip2": 47, "diaihora": "2026-06-28T21:00:00-06:00", "estadi": 9,  "grup": 12, "gols1": -1, "gols2": -1, "empat": null}},
+
+  {"model": "joc.partit", "pk": 69, "fields": {"equip1": 13, "equip2": 16, "diaihora": "2026-06-29T18:00:00-08:00", "estadi": 8,  "grup": 4,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 70, "fields": {"equip1": 15, "equip2": 14, "diaihora": "2026-06-29T18:00:00-08:00", "estadi": 7,  "grup": 4,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 71, "fields": {"equip1": 5,  "equip2": 6,  "diaihora": "2026-06-29T21:00:00-08:00", "estadi": 5,  "grup": 2,  "gols1": -1, "gols2": -1, "empat": null}},
+  {"model": "joc.partit", "pk": 72, "fields": {"equip1": 7,  "equip2": 8,  "diaihora": "2026-06-29T21:00:00-08:00", "estadi": 5,  "grup": 2,  "gols1": -1, "gols2": -1, "empat": null}}
+]
