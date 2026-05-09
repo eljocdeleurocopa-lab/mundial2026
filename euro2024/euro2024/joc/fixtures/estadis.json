@@ -1,0 +1,18 @@
+[
+  {"model": "joc.estadi", "pk": 1,  "fields": {"nom": "Estadio Azteca",             "ciutat": "Ciutat de Mèxic"}},
+  {"model": "joc.estadi", "pk": 2,  "fields": {"nom": "Estadio Akron",              "ciutat": "Guadalajara"}},
+  {"model": "joc.estadi", "pk": 3,  "fields": {"nom": "Estadio BBVA",               "ciutat": "Monterrey"}},
+  {"model": "joc.estadi", "pk": 4,  "fields": {"nom": "BMO Field",                  "ciutat": "Toronto"}},
+  {"model": "joc.estadi", "pk": 5,  "fields": {"nom": "BC Place",                   "ciutat": "Vancouver"}},
+  {"model": "joc.estadi", "pk": 6,  "fields": {"nom": "SoFi Stadium",               "ciutat": "Los Angeles"}},
+  {"model": "joc.estadi", "pk": 7,  "fields": {"nom": "Levi's Stadium",             "ciutat": "San Francisco"}},
+  {"model": "joc.estadi", "pk": 8,  "fields": {"nom": "Lumen Field",                "ciutat": "Seattle"}},
+  {"model": "joc.estadi", "pk": 9,  "fields": {"nom": "AT&T Stadium",               "ciutat": "Dallas"}},
+  {"model": "joc.estadi", "pk": 10, "fields": {"nom": "NRG Stadium",                "ciutat": "Houston"}},
+  {"model": "joc.estadi", "pk": 11, "fields": {"nom": "Arrowhead Stadium",          "ciutat": "Kansas City"}},
+  {"model": "joc.estadi", "pk": 12, "fields": {"nom": "Mercedes-Benz Stadium",      "ciutat": "Atlanta"}},
+  {"model": "joc.estadi", "pk": 13, "fields": {"nom": "Hard Rock Stadium",          "ciutat": "Miami"}},
+  {"model": "joc.estadi", "pk": 14, "fields": {"nom": "Lincoln Financial Field",    "ciutat": "Filadèlfia"}},
+  {"model": "joc.estadi", "pk": 15, "fields": {"nom": "Gillette Stadium",           "ciutat": "Boston"}},
+  {"model": "joc.estadi", "pk": 16, "fields": {"nom": "MetLife Stadium",            "ciutat": "Nova York / Nova Jersey"}}
+]
