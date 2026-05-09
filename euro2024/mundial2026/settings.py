@@ -128,7 +128,7 @@ EMAIL_PORT          = 587
 EMAIL_USE_TLS       = True
 DEFAULT_FROM_EMAIL  = 'El Joc del Mundial 2026'
 
-CSRF_TRUSTED_ORIGINS = ['https://*.disbarat.cat', 'https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://*.disbarat.cat', 'https://*.127.0.0.1', 'https://mundial2026-production-7a27.up.railway.app']
 
 # =============================================================================
 # CONSTANTS ESPECÍFIQUES DEL MUNDIAL 2026
