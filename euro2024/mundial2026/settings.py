@@ -98,10 +98,10 @@ STATIC_URL = '/static/'
 
 if os.getenv('DJANGO_ENV') == 'prod':
     DEBUG         = False
-ALLOWED_HOSTS = ['.disbarat.cat', '.railway.app', 'mundial2026-production-7a27.up.railway.app']  # canviar pel domini real
+    ALLOWED_HOSTS = ['.disbarat.cat', '.railway.app', 'mundial2026-production-7a27.up.railway.app']
 else:
     DEBUG         = True
-    ALLOWED_HOSTS = ['mundial2026-production-7a27.up.railway.app','.railway.app']
+    ALLOWED_HOSTS = ['mundial2026-production-7a27.up.railway.app', '.railway.app']
 
 from unipath import Path as UniPath
 BASE_DIR_UNI = UniPath(__file__).ancestor(2)
