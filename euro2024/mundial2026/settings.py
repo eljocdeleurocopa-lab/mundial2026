@@ -63,13 +63,13 @@ if os.getenv('DOCKER_CONTAINER'):
     DATABASES = {
         'default': {
             'ENGINE':   'django.db.backends.postgresql',
-            'NAME':     'mundial2026',
-            'USER':     'postgres',
-            'PASSWORD': 'postgres',
-            'HOST':     POSTGRES_HOST,
-            'PORT':     '5432',
-        }
+            'NAME':     os.getenv('PGDATABASE', 'mundial2026'),
+     	    'USER':     os.getenv('PGUSER', 'postgres'),
+       	    'PASSWORD': os.getenv('PGPASSWORD', 'postgres'),
+       	    'HOST':     os.getenv('PGHOST', '127.0.0.1'),
+            'PORT':     os.getenv('PGPORT', '5432'),
     }
+}
 else:
     DATABASES = {
         'default': {
