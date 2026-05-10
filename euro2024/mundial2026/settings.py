@@ -26,6 +26,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   # ← afegeix aquesta línia
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -149,3 +150,4 @@ ID_ADMIN        = 1
 #   TOTAL:         104 partits
 NUM_PARTITS       = 104   # era 51 a l'Eurocopa
 NUM_PARTITS_GRUPS = 72    # era 36 a l'Eurocopa
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

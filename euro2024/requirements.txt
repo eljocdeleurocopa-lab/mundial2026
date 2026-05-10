@@ -13,3 +13,4 @@ uWSGI
 #### apt-get packages:
 # gettext
 gunicorn
+whitenoise
