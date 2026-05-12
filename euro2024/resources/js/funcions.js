@@ -356,7 +356,7 @@ function actualitza_eliminatoria()
 window.onload = function() {
     if (document.getElementById("f1")) {
         var formulari = document.getElementById("f1");
-        if (formulari.elements["num-partits"]) {
+        if (formulari.elements["form-0-equip-1"]) {
             actualitza_eliminatoria();
         } else if (formulari.elements["form-0-gols1"]) {
             actualitza_grups();
