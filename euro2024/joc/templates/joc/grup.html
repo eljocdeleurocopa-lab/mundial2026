@@ -32,7 +32,7 @@
 {{ formset.management_form }}
 {% for form in formset %}
 {{ form.id }}
-<input type="hidden" name="nom-equip-{{ form.instance.equip1.id }}" value="{{ form.instance.equip1.nom }}">
+{% if forloop.counter0 < 6 %}<input type="hidden" name="nom-equip-{{ form.instance.equip1.id }}" value="{{ form.instance.equip1.nom }}">
 <input type="hidden" name="nom-equip-{{ form.instance.equip2.id }}" value="{{ form.instance.equip2.nom }}">
 <input type="hidden" name="bandera-equip-{{ form.instance.equip1.id }}" value="{% with 'banderes/'|add:form.instance.equip1.bandera as bandera1 %}{% static bandera1 %}{% endwith %}">
 <input type="hidden" name="bandera-equip-{{ form.instance.equip2.id }}" value="{% with 'banderes/'|add:form.instance.equip2.bandera as bandera2 %}{% static bandera2 %}{% endwith %}">
