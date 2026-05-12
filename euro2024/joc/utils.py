@@ -186,14 +186,17 @@ def get_or_create_and_reset_pronostic_partit(id_partit, jugador, id_equip1, id_e
         partit.equip2_id = id_equip2
         partit.save()
 
-
 def _get_equip_id_per_posicio_grup(jugador, posicio, nom_grup):
-    return PronosticEquipGrup.objects.get(
-        jugador=jugador,
-        equip__grup__nom=nom_grup,
-        posicio=posicio,
-    ).equip.id
-
+    try:
+        return PronosticEquipGrup.objects.get(
+            jugador=jugador,
+            equip__grup__nom=nom_grup,
+            posicio=posicio,
+        ).equip.id
+    except PronosticEquipGrup.DoesNotExist:
+        # Fallback: retorna el primer equip del grup si no hi ha classificació
+        from joc.models import Equip
+        return Equip.objects.filter(grup__nom=nom_grup).first().id
 
 def _get_guanyador_partit(jugador, id_partit):
     return PronosticPartit.objects.get(
