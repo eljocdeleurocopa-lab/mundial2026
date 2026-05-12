@@ -15,7 +15,7 @@ function create2DArray(rows) {
 function genera_resultats(formulari)
 {
     var acabat = 1;
-    var resultats = create2DArray(37);
+    var resultats = create2DArray(49);
 
     for (var i=0; i<6; i++)
     {
@@ -237,8 +237,8 @@ function actualitza_grups()
         parseInt(formulari.elements["form-1-equip-2"].value)
     ]
 
-    var noms_equips = Array(37);
-    var banderes_equips = Array(37);
+    var noms_equips = Array(49);
+    var banderes_equips = Array(49);
     for (var i = 0; i<ids_equips.length; i++)
     {
         noms_equips[ids_equips[i]] = formulari.elements["nom-equip-"+ids_equips[i]].value
