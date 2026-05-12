@@ -153,38 +153,38 @@ def pronostic(request):
     equips_classificacio = []
     deshabilita_submit = False
 
-if nom_grup in FASE_GRUPS:
-    tots_amb_posicio = True
-    for equip in Equip.objects.filter(grup=grup):
-        equip_classificacio, _ = PronosticEquipGrup.objects.get_or_create(
-            jugador=jugador, equip=equip
-        )
-        equips_classificacio.append(equip_classificacio)
-        if equip_classificacio.posicio == 0:
-            tots_amb_posicio = False
+    if nom_grup in FASE_GRUPS:
+        tots_amb_posicio = True
+        for equip in Equip.objects.filter(grup=grup):
+            equip_classificacio, _ = PronosticEquipGrup.objects.get_or_create(
+                jugador=jugador, equip=equip
+            )
+            equips_classificacio.append(equip_classificacio)
+            if equip_classificacio.posicio == 0:
+                tots_amb_posicio = False
 
     # Comprovem que tots els partits del grup tinguin pronòstic vàlid
-    tots_partits_ok = True
-    for form in grup_form.forms:
-        inst = form.instance
-        if inst.gols1 == -1 or inst.gols2 == -1:
-            tots_partits_ok = False
-            break
-        elif inst.gols1 == inst.gols2 and not inst.empat:
-            tots_partits_ok = False
-            break
+        tots_partits_ok = True
+        for form in grup_form.forms:
+            inst = form.instance
+            if inst.gols1 == -1 or inst.gols2 == -1:
+                tots_partits_ok = False
+                break
+            elif inst.gols1 == inst.gols2 and not inst.empat:
+                tots_partits_ok = False
+                break
 
-    deshabilita_submit = not (tots_amb_posicio and tots_partits_ok)
-else:
+        deshabilita_submit = not (tots_amb_posicio and tots_partits_ok)
+    else:
         # Rondes eliminatòries: comprovem que tots els partits tinguin pronòstic
-    for form in grup_form.forms:
-        inst = form.instance
-        if inst.gols1 == -1 or inst.gols2 == -1:
-            deshabilita_submit = True
-            break
-        elif inst.gols1 == inst.gols2 and not inst.empat:
-            deshabilita_submit = True
-            break
+        for form in grup_form.forms:
+            inst = form.instance
+            if inst.gols1 == -1 or inst.gols2 == -1:
+                deshabilita_submit = True
+                break
+            elif inst.gols1 == inst.gols2 and not inst.empat:
+                deshabilita_submit = True
+                break
 
     response = render(
         request,
