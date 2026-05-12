@@ -175,7 +175,7 @@ if nom_grup in FASE_GRUPS:
             break
 
     deshabilita_submit = not (tots_amb_posicio and tots_partits_ok)
-    else:
+ else:
         # Rondes eliminatòries: comprovem que tots els partits tinguin pronòstic
         for form in grup_form.forms:
             inst = form.instance
