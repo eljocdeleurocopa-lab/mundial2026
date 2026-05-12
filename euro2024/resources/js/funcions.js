@@ -1,6 +1,6 @@
 var NUM_TEAMS_PER_GROUP = 4;
 // var TORNEIG = 'mundial';
-var TORNEIG = 'euro';
+var TORNEIG = 'mundial';
 
 function create2DArray(rows) {
     var arr = [];
@@ -352,3 +352,14 @@ function actualitza_eliminatoria()
         formulari.elements["seguent"].disabled = true;
     }
 }
+// Inicialitza la classificació quan es carrega la pàgina
+window.onload = function() {
+    if (document.getElementById("f1")) {
+        var formulari = document.getElementById("f1");
+        if (formulari.elements["num-partits"]) {
+            actualitza_eliminatoria();
+        } else if (formulari.elements["form-0-gols1"]) {
+            actualitza_grups();
+        }
+    }
+};
