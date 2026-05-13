@@ -241,9 +241,14 @@ function actualitza_grups()
     var banderes_equips = Array(49);
     for (var i = 0; i<ids_equips.length; i++)
     {
-        noms_equips[ids_equips[i]] = formulari.elements["nom-equip-"+ids_equips[i]].value
-            banderes_equips[ids_equips[i]] = formulari.elements["bandera-equip-"+ids_equips[i]].value
+    if (typeof noms_fixos !== 'undefined' && noms_fixos[ids_equips[i]]) {
+        noms_equips[ids_equips[i]] = noms_fixos[ids_equips[i]];
+        banderes_equips[ids_equips[i]] = banderes_fixes[ids_equips[i]];
+    } else if (formulari.elements["nom-equip-"+ids_equips[i]]) {
+        noms_equips[ids_equips[i]] = formulari.elements["nom-equip-"+ids_equips[i]].value;
+        banderes_equips[ids_equips[i]] = formulari.elements["bandera-equip-"+ids_equips[i]].value;
     }
+    
 
     var tupla_resultats = genera_resultats(formulari);
     var resultats = tupla_resultats[0];

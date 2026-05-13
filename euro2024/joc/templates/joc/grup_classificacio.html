@@ -23,4 +23,12 @@
 {% for equip_classificacio in equips_classificacio%}
 <input type="hidden" name="id{{ forloop.counter0 }}" value="{{ equip_classificacio.equip.id }}">
 {% endfor %}
+<script>
+var noms_fixos = {};
+var banderes_fixes = {};
+{% for equip_class in equips_classificacio %}
+noms_fixos[{{ equip_class.equip.id }}] = "{{ equip_class.equip.nom }}";
+banderes_fixes[{{ equip_class.equip.id }}] = "{% with 'banderes/'|add:equip_class.equip.bandera as bandera %}{% static bandera %}{% endwith %}";
+{% endfor %}
+</script>
 </div>
