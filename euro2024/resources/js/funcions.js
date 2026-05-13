@@ -357,7 +357,22 @@ window.onload = function() {
     if (document.getElementById("f1")) {
         var formulari = document.getElementById("f1");
         if (formulari.elements["form-0-gols1"]) {
-            actualitza_grups();
+            // Fase de grups: només habilita el boto, no recalcula la classificació
+            var boto = formulari.elements["seguent"];
+            if (boto && boto.disabled) {
+                // Comprova si tots els partits tenen resultat
+                var tots_ok = true;
+                for (var i = 0; i < formulari.elements["num-partits"].value; i++) {
+                    if (formulari.elements["form-"+i+"-gols1"].value == "-1" ||
+                        formulari.elements["form-"+i+"-gols2"].value == "-1") {
+                        tots_ok = false;
+                        break;
+                    }
+                }
+                if (tots_ok) {
+                    boto.disabled = false;
+                }
+            }
         } else if (formulari.elements["form-0-equip-1"]) {
             actualitza_eliminatoria();
         }
