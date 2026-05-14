@@ -250,6 +250,7 @@ function actualitza_grups()
     }
     
 
+}
     var tupla_resultats = genera_resultats(formulari);
     var resultats = tupla_resultats[0];
     var acabat = tupla_resultats[1];
