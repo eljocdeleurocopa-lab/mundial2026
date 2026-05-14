@@ -135,7 +135,7 @@ def pronostic(request):
     except Grup.DoesNotExist:
         seguent_grup = 'S'  # codi final que acaba el pronòstic
 
-    partits = Partit.objects.filter(grup=grup)
+    partits = Partit.objects.filter(grup=grup).order_by("diaihora")
 
     # Creem els PronosticPartit que faltin
     for partit in partits:
@@ -146,7 +146,7 @@ def pronostic(request):
         PronosticPartit.objects.get_or_create(jugador=jugador, partit=partit, **items)
 
     grup_form = GrupForm(
-        queryset=PronosticPartit.objects.filter(jugador=jugador, partit__grup=grup)
+        queryset=PronosticPartit.objects.filter(jugador=jugador, partit__grup=grup).order_by("partit__diaihora")
     )
 
     # Dades per al template de fase de grups
