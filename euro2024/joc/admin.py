@@ -45,7 +45,8 @@ def recalcula_totes_puntuacions(modeladmin, request, queryset):
     for jugador in tots:
         calcula_puntuacions_jugador(jugador)
     actualitza_ranking()
-    modeladmin.message_user(request, f'Puntuacions recalculades per {tots.count()} jugadors.')
+    if request is not None:
+        modeladmin.message_user(request, f'Puntuacions recalculades per {tots.count()} jugadors.')
 
 
 class JugadorAdmin(admin.ModelAdmin):
@@ -155,6 +156,7 @@ admin.site.register(Estadi, EstadiAdmin)
 # =============================================================================
 
 class PartitAdmin(admin.ModelAdmin):
+    actions = [recalcula_totes_puntuacions]  # recàlcul manual des de la llista
     list_display  = [
         'id', 'grup', 'diaihora', 'equip1', 'get_resultat', 'equip2',
         'empat', 'estadi', 'get_jugat',
@@ -162,7 +164,6 @@ class PartitAdmin(admin.ModelAdmin):
     list_filter   = ['grup']
     ordering      = ['id']
     search_fields = ['equip1__nom', 'equip2__nom']
-    list_editable = ['gols1', 'gols2', 'empat']  # edició ràpida des del llistat
 
     fields = [
         'grup', 'diaihora', 'estadi',
@@ -181,7 +182,6 @@ class PartitAdmin(admin.ModelAdmin):
     def get_jugat(self, obj):
         return obj.gols1 >= 0 and obj.gols2 >= 0
 
-    # Sobreescrivim get_list_display per incloure gols1 i gols2 editables
     def get_list_display(self, request):
         return [
             'id', 'grup', 'diaihora', 'equip1', 'gols1',
@@ -191,6 +191,12 @@ class PartitAdmin(admin.ModelAdmin):
     @admin.display(description='-')
     def get_guio(self, obj):
         return '-'
+
+    def save_model(self, request, obj, form, change):
+        """En guardar un resultat real, recalcula els punts de tots els jugadors."""
+        super().save_model(request, obj, form, change)
+        if obj.gols1 >= 0 and obj.gols2 >= 0:
+            recalcula_totes_puntuacions(self, request, queryset=None)
 
 
 admin.site.register(Partit, PartitAdmin)
@@ -255,8 +261,6 @@ class PronosticEquipFaseAdmin(admin.ModelAdmin):
     search_fields = ['jugador__usuari__username', 'equip__nom']
     raw_id_fields = ['jugador', 'equip']
 
-    # L'admin pot introduir els resultats reals com a pronòstics de l'usuari admin
-    # (ID_ADMIN), que és el que usa el sistema per calcular puntuacions.
     def has_add_permission(self, request):
         return True
 
