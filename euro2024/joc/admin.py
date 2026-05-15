@@ -162,7 +162,7 @@ class PartitAdmin(admin.ModelAdmin):
     list_filter   = ['grup']
     ordering      = ['id']
     search_fields = ['equip1__nom', 'equip2__nom']
-  
+    list_editable = ['gols1', 'gols2', 'empat']  # edició ràpida des del llistat
 
     fields = [
         'grup', 'diaihora', 'estadi',
