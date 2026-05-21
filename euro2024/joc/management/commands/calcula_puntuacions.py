@@ -30,21 +30,20 @@ PUNTS_CLASSIFICACIO_GRUP = {1: 2, 2: 4, 4: 10}
 # --- Setzens de final: equips classificats (32 encerts possibles) ---
 PUNTS_EQUIPS_SETZENS = {
     1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1,
-    7: 2, 8: 2, 9: 2, 10: 2, 11: 2,
-    12: 4, 13: 4, 14: 4, 15: 4,
-    16: 7, 17: 7, 18: 7,
-    19: 10, 20: 10,
-    21: 14,
-    22: 18,
-    23: 22,
-    24: 26,
-    25: 30,
-    26: 35,
-    27: 40,
-    28: 45,
-    29: 51,
-    30: 57,
-    31: 63,
+    7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1,
+    13: 2, 14: 2, 15: 2, 16: 2,
+    17: 4, 18: 4, 19: 4,
+    20: 7, 21: 7,
+    22: 10,
+    23: 14,
+    24: 18,
+    25: 23,
+    26: 28,
+    27: 34,
+    28: 40,
+    29: 47,
+    30: 55,
+    31: 64,
     32: 75,
 }
 
@@ -71,7 +70,7 @@ PUNTS_EQUIPS_QUARTS = {
 }
 
 # --- Quarts de final: partits ---
-PUNTS_EQUIP_POSICIO_QUARTS = 5
+PUNTS_EQUIP_POSICIO_QUARTS = 7
 PUNTS_SIGNE_QUARTS         = 7
 PUNTS_RESULTAT_QUARTS      = 10
 
@@ -87,7 +86,7 @@ PUNTS_RESULTAT_SEMIS      = 14
 PUNTS_EQUIPS_TERCER = {1: 15, 2: 40}
 
 # --- Tercer i quart lloc: partit ---
-PUNTS_EQUIP_POSICIO_TERCER = 10
+PUNTS_EQUIP_POSICIO_TERCER = 12
 PUNTS_SIGNE_TERCER         = 14
 PUNTS_RESULTAT_TERCER      = 20
 
@@ -95,7 +94,7 @@ PUNTS_RESULTAT_TERCER      = 20
 PUNTS_EQUIPS_FINAL = {1: 30, 2: 75}
 
 # --- Final: partit ---
-PUNTS_EQUIP_POSICIO_FINAL = 10
+PUNTS_EQUIP_POSICIO_FINAL = 15
 PUNTS_SIGNE_FINAL         = 14
 PUNTS_RESULTAT_FINAL      = 20
 
