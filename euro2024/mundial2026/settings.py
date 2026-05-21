@@ -89,7 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # --- Internacionalització ---
 LANGUAGE_CODE = 'ca'
-TIME_ZONE     = 'America/New_York'  # El Mundial 2026 es juga a USA/Canadà/Mèxic
+TIME_ZONE     = 'Europe/Madrid' # El Mundial 2026 es juga a USA/Canadà/Mèxic, però posem això per l'hora d'aquí
 USE_I18N      = True
 USE_L10N      = True
 USE_TZ        = True
