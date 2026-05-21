@@ -1,0 +1,150 @@
+#resultats {
+    margin-top: 40px;
+    width: 900px;
+    margin: auto;
+    clear: both;
+}
+
+#partits_linia {
+    width: 900px;
+}
+
+.partit1 {
+    padding-top: 25px;
+    float: left;
+    width: 420px;
+}
+
+.partit2 {
+    padding-top: 25px;
+    float: right;
+    width: 420px;
+}
+
+.titol_partit {
+    color: #992222;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.dia {
+    padding-left: 5px;
+    background-color: black;
+    color: white;
+    font-family: Verdana;
+    font-size: 10px;
+}
+
+.nomgrup {
+    font-weight: bold;
+    padding-left: 5px;
+    background-color: black;
+    color: white;
+    font-family: Verdana;
+    font-size: 10px;
+}
+
+.equip {
+    font-family: Verdana;
+    font-size: 12px;
+}
+
+.negreta {
+    font-family: Verdana;
+    font-size: 10px;
+}
+
+.negreta_bandera {
+    font-family: Verdana;
+    font-size: 10px;
+    text-align: center;
+}
+
+.class_bandera {
+    text-align: center;
+}
+
+/* Equip eliminat (perdedor) */
+.eliminat {
+    color: #999999;
+    text-decoration: line-through;
+}
+
+/* Equip classificat (guanyador) */
+.classificat {
+    font-weight: bold;
+    color: #006600;
+}
+
+.boto_next {
+    float: right;
+    width: 175px;
+    height: 80px;
+    padding-top: 25px;
+    padding-right: 75px;
+}
+
+.boto_index {
+    -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+    background: -moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+    background: -webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+    background: -o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+    background: -ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+    background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6', GradientType=0);
+    background-color: #ffffff;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    cursor: pointer;
+    color: #666666;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffffff;
+}
+
+.boto_index:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6f6f6), color-stop(1, #ffffff));
+    background: -moz-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+    background: -webkit-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+    background: -o-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+    background: -ms-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+    background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff', GradientType=0);
+    background-color: #f6f6f6;
+}
+
+.boto_index:active {
+    position: relative;
+    top: 1px;
+}
+
+.boto_index:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* Selector d'equips eliminatòria */
+.selector_equip {
+    font-family: Verdana;
+    font-size: 12px;
+    width: 200px;
+}
+
+#boto_seguent {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 400px;
+    text-align: center;
+    clear: both;
+    float: right;
+}
