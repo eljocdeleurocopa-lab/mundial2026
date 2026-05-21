@@ -151,3 +151,4 @@ ID_ADMIN        = 1
 NUM_PARTITS       = 104   # era 51 a l'Eurocopa
 NUM_PARTITS_GRUPS = 72    # era 36 a l'Eurocopa
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+FASE_MUNDIAL = os.getenv('FASE_MUNDIAL', 'pronostics')
