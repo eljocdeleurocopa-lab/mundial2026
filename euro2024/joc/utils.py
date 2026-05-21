@@ -419,3 +419,12 @@ def comprova_tercers(request, jugador):
         # Empat en la posició de tall → cal resolució per FIFA ranking
         return tercers_ordenats
     return None
+
+# =========================================================================
+# Control de fase del Mundial
+# =========================================================================
+
+def pronostics_oberts():
+    """Retorna True si els jugadors encara poden entrar pronòstics."""
+    from django.conf import settings
+    return settings.FASE_MUNDIAL == 'pronostics'
