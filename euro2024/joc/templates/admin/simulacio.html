@@ -1,0 +1,49 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Simulació de Puntuació</h1>
+
+<div style="background:#f8f8f8; border:1px solid #ddd; padding:20px; margin-bottom:20px; border-radius:4px;">
+  <h2>Instruccions</h2>
+  <ol>
+    <li>Assegura't que existeixen els usuaris <strong>prova1, prova2, prova3, prova4</strong> a l'app.</li>
+    <li>Clica <strong>Executa simulació</strong> — generarà pronòstics i resultats fictícis i calcularà els punts.</li>
+    <li>Revisa l'informe de puntuacions que apareixerà.</li>
+    <li>Quan hagis acabat, clica <strong>Esborra simulació</strong> per netejar les dades fictícies.</li>
+  </ol>
+  <p><strong>Estratègies dels usuaris:</strong></p>
+  <ul>
+    <li><strong>prova1:</strong> Perfecte — encerta tots els resultats exactes</li>
+    <li><strong>prova2:</strong> Signe — encerta el signe (1X2) però no el resultat exacte</li>
+    <li><strong>prova3:</strong> Mixt — encerta resultats exactes als partits parells, signe als senars</li>
+    <li><strong>prova4:</strong> Dolent — encerta poc</li>
+  </ul>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" name="accio" value="simula"
+    style="background:#417690; color:white; padding:10px 20px; border:none; border-radius:4px; font-size:14px; cursor:pointer; margin-right:10px;">
+    ▶ Executa simulació
+  </button>
+  <button type="submit" name="accio" value="esborra"
+    style="background:#ba2121; color:white; padding:10px 20px; border:none; border-radius:4px; font-size:14px; cursor:pointer;"
+    onclick="return confirm('Segur que vols esborrar les dades de simulació?')">
+    ✕ Esborra simulació
+  </button>
+</form>
+
+{% if error %}
+<div style="background:#ffebee; border:1px solid #f44336; padding:15px; margin-top:20px; border-radius:4px;">
+  <strong>Error:</strong><br>
+  <pre style="margin:10px 0 0; white-space:pre-wrap;">{{ error }}</pre>
+</div>
+{% endif %}
+
+{% if output %}
+<div style="background:#e8f5e9; border:1px solid #4caf50; padding:15px; margin-top:20px; border-radius:4px;">
+  <strong>Resultat:</strong><br>
+  <pre style="margin:10px 0 0; white-space:pre-wrap; font-size:13px;">{{ output }}</pre>
+</div>
+{% endif %}
+
+{% endblock %}
