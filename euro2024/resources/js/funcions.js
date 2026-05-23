@@ -281,7 +281,24 @@ function afegeix_equips_submit() {
             }
         } else {
             var equip_index = 0;
+            var participant_index = 0;
             for (var i = 0; i < num_partits; i++) {
+                var el_equip1 = formulari.elements["form-"+i+"-equip-1"];
+                var el_equip2 = formulari.elements["form-"+i+"-equip-2"];
+
+                // Enviem els 2 participants de cada partit
+                if (el_equip1 && el_equip2) {
+                    var p1 = document.createElement("input");
+                    p1.type = "hidden"; p1.name = "participant_" + participant_index; p1.value = el_equip1.value;
+                    formulari.appendChild(p1);
+                    participant_index++;
+                    var p2 = document.createElement("input");
+                    p2.type = "hidden"; p2.name = "participant_" + participant_index; p2.value = el_equip2.value;
+                    formulari.appendChild(p2);
+                    participant_index++;
+                }
+
+                // Enviem el guanyador
                 var resultat = guanyador_partit(formulari, i);
                 if (resultat !== null) {
                     var input = document.createElement("input");

@@ -85,14 +85,27 @@ def pronostic(request):
             guarda_classificacio_grup(request, jugador)
 
         # Guardem pronòstics d'equips classificats (rondes eliminatòries)
+        # participant_X = tots els equips de la fase actual
+        # equip_X = guanyadors (equips que passen a la fase seguent)
         if grup_actual in SETZENS:
-            _guarda_equips_fase(request, jugador, FASE_SETZENS, 32)
-        elif grup_actual in VUITENS:
+            # 32 participants als setzens
+            _guarda_equips_fase_participants(request, jugador, FASE_SETZENS, 32)
+            # 16 guanyadors dels setzens -> passen als vuitens
             _guarda_equips_fase(request, jugador, FASE_VUITENS, 16)
-        elif grup_actual in QUARTS:
+        elif grup_actual in VUITENS:
+            # 16 participants als vuitens
+            _guarda_equips_fase_participants(request, jugador, FASE_VUITENS, 16)
+            # 8 guanyadors dels vuitens -> passen als quarts
             _guarda_equips_fase(request, jugador, FASE_QUARTS, 8)
-        elif grup_actual in SEMIS:
+        elif grup_actual in QUARTS:
+            # 8 participants als quarts
+            _guarda_equips_fase_participants(request, jugador, FASE_QUARTS, 8)
+            # 4 guanyadors dels quarts -> passen a semis
             _guarda_equips_fase(request, jugador, FASE_SEMIS, 4)
+        elif grup_actual in SEMIS:
+            # 4 participants a semis
+            _guarda_equips_fase_participants(request, jugador, FASE_SEMIS, 4)
+            # els guanyadors/perdedors es guarden via TERCER i FINAL
         elif grup_actual in TERCER:
             _guarda_equips_posicio_fase(request, jugador, FASE_TERCER, [3, 4])
         elif grup_actual in FINAL:
@@ -226,6 +239,23 @@ def _guarda_equips_fase(request, jugador, fase, num_equips):
     PronosticEquipFase.objects.filter(jugador=jugador, fase=fase).delete()
     for i in range(num_equips):
         equip_id = request.POST.get(f'equip_{i}')
+        if equip_id:
+            try:
+                equip = Equip.objects.get(pk=int(equip_id))
+                PronosticEquipFase.objects.get_or_create(
+                    jugador=jugador,
+                    fase=fase,
+                    equip=equip,
+                    defaults={'posicio': 0},
+                )
+            except (Equip.DoesNotExist, ValueError):
+                pass
+
+
+def _guarda_equips_fase_participants(request, jugador, fase, num_equips):
+    PronosticEquipFase.objects.filter(jugador=jugador, fase=fase).delete()
+    for i in range(num_equips):
+        equip_id = request.POST.get(f'participant_{i}')
         if equip_id:
             try:
                 equip = Equip.objects.get(pk=int(equip_id))
