@@ -193,8 +193,12 @@ function comprova_boto_inicial() {
     var boto = formulari.elements["seguent"];
     if (!boto) return;
 
-    // Rondes eliminatòries
-    if (formulari.elements["form-0-equip-1"]) {
+    // Distingim fase de grups de rondes eliminatòries pel camp nom-grup
+    var nom_grup_el = document.getElementById("nom-grup");
+    var nom_grup = nom_grup_el ? nom_grup_el.value : '';
+    var grups_fase = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+    if (grups_fase.indexOf(nom_grup) === -1) {
+        // Ronda eliminatòria
         actualitza_eliminatoria();
         return;
     }
