@@ -28,6 +28,7 @@
 <form id="f1" name="f1" action="{% url 'joc:pronostic' %}?grup={{ seguent_grup }}" method="post">
 {% csrf_token %}
 <input type="hidden" name="num-partits" value="{{ formset|length }}">
+<input type="hidden" id="nom-grup" name="nom-grup" value="{{ grup }}">
 <div id="resultats">
 {{ formset.management_form }}
 {% for form in formset %}
@@ -68,4 +69,3 @@
 </form>
 
 {% endblock %}
-
