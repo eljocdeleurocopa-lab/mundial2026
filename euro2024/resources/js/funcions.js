@@ -187,6 +187,52 @@ function actualitza_eliminatoria() {
     else { formulari.elements["seguent"].disabled = true; }
 }
 
+function comprova_boto_inicial() {
+    var formulari = document.getElementById("f1");
+    if (!formulari) return;
+    var boto = formulari.elements["seguent"];
+    if (!boto) return;
+
+    // Rondes eliminatòries
+    if (formulari.elements["form-0-equip-1"]) {
+        actualitza_eliminatoria();
+        return;
+    }
+
+    // Fase de grups: comprova si tots els gols estan entrats
+    var num_partits = parseInt(formulari.elements["num-partits"].value);
+    for (var i = 0; i < num_partits; i++) {
+        var g1 = formulari.elements["form-"+i+"-gols1"];
+        var g2 = formulari.elements["form-"+i+"-gols2"];
+        if (!g1 || !g2) return;
+        if (g1.value == "-1" || g2.value == "-1") return;
+        if (g1.value == g2.value) {
+            var empat_els = formulari.elements["form-"+i+"-empat"];
+            var empat_ok = false;
+            if (empat_els) {
+                for (var j = 0; j < empat_els.length; j++) {
+                    if (empat_els[j].checked) { empat_ok = true; break; }
+                }
+            }
+            if (!empat_ok) return;
+        }
+    }
+    // Tots els partits ok — però la classificació de grups també ha d'estar completa
+    // (el botó ja s'habilita via actualitza_grups quan es canvia un resultat)
+    // Aquí només l'habilitem si la classificació ja estava feta (posicions != 0)
+    var classificacio_ok = true;
+    for (var i = 0; i < 4; i++) {
+        var id_el = formulari.elements["id"+i];
+        if (!id_el || id_el.value == "0" || id_el.value == "") {
+            classificacio_ok = false;
+            break;
+        }
+    }
+    if (classificacio_ok) {
+        boto.removeAttribute('disabled');
+    }
+}
+
 function guanyador_partit(formulari, i) {
     var el_equip1 = formulari.elements["form-"+i+"-equip-1"];
     var el_equip2 = formulari.elements["form-"+i+"-equip-2"];
@@ -260,15 +306,9 @@ function afegeix_equips_submit() {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
         afegeix_equips_submit();
-        var formulari = document.getElementById("f1");
-        if (formulari && formulari.elements["form-0-equip-1"]) {
-            actualitza_eliminatoria();
-        }
+        comprova_boto_inicial();
     });
 } else {
     afegeix_equips_submit();
-    var formulari = document.getElementById("f1");
-    if (formulari && formulari.elements["form-0-equip-1"]) {
-        actualitza_eliminatoria();
-    }
+    comprova_boto_inicial();
 }
