@@ -178,7 +178,8 @@ function actualitza_eliminatoria() {
             if (!empat_seleccionat) { acabat = 0; }
         } else {
             for (var j=0, iLen=formulari.elements[form].length; j<iLen; j++) {
-                formulari.elements[form][j].disabled = true; formulari.elements[form][j].checked = false;
+                formulari.elements[form][j].disabled = true;
+                formulari.elements[form][j].checked = false;
             }
         }
     }
@@ -186,126 +187,88 @@ function actualitza_eliminatoria() {
     else { formulari.elements["seguent"].disabled = true; }
 }
 
-// Inicialitza quan es carrega la pàgina
-window.onload = function() {
-    if (document.getElementById("f1")) {
-        var formulari = document.getElementById("f1");
-        if (formulari.elements["form-0-gols1"]) {
-            var boto = formulari.elements["seguent"];
-            if (boto && boto.disabled) {
-                var tots_ok = true;
-                for (var i = 0; i < formulari.elements["num-partits"].value; i++) {
-                    if (formulari.elements["form-"+i+"-gols1"].value == "-1" ||
-                        formulari.elements["form-"+i+"-gols2"].value == "-1") { tots_ok = false; break; }
-                }
-                if (tots_ok) { boto.disabled = false; }
+function guanyador_partit(formulari, i) {
+    var el_equip1 = formulari.elements["form-"+i+"-equip-1"];
+    var el_equip2 = formulari.elements["form-"+i+"-equip-2"];
+    if (!el_equip1 || !el_equip2) return null;
+    var equip1_id = parseInt(el_equip1.value);
+    var equip2_id = parseInt(el_equip2.value);
+    var gols1 = parseInt(formulari.elements["form-"+i+"-gols1"].value);
+    var gols2 = parseInt(formulari.elements["form-"+i+"-gols2"].value);
+    if (gols1 > gols2) return {guanyador: equip1_id, perdedor: equip2_id};
+    if (gols2 > gols1) return {guanyador: equip2_id, perdedor: equip1_id};
+    var empat_els = formulari.elements["form-"+i+"-empat"];
+    if (empat_els) {
+        for (var j = 0; j < empat_els.length; j++) {
+            if (empat_els[j].checked) {
+                if (empat_els[j].value == "1") return {guanyador: equip1_id, perdedor: equip2_id};
+                else return {guanyador: equip2_id, perdedor: equip1_id};
             }
-        } else if (formulari.elements["form-0-equip-1"]) {
-            actualitza_eliminatoria();
         }
     }
-};
+    return null;
+}
 
-// Afegeix els equips classificats/posicionats com a camps ocults abans d'enviar
-document.addEventListener('DOMContentLoaded', function() {
+function afegeix_equips_submit() {
     var formulari = document.getElementById("f1");
     if (!formulari) return;
     if (!formulari.elements["form-0-equip-1"]) return;
 
-    formulari.addEventListener('submit', function() {
+    formulari.onsubmit = function() {
         var num_partits = parseInt(formulari.elements["num-partits"].value);
         var nom_grup_el = document.getElementById("nom-grup");
         var nom_grup = nom_grup_el ? nom_grup_el.value : '';
 
-        // Grups Q (tercer/quart) i R (final): enviem per posició
         if (nom_grup === 'Q' || nom_grup === 'R') {
-            // Només hi ha 1 partit
-            var equip1_id = parseInt(formulari.elements["form-0-equip-1"].value);
-            var equip2_id = parseInt(formulari.elements["form-0-equip-2"].value);
-            var gols1 = parseInt(formulari.elements["form-0-gols1"].value);
-            var gols2 = parseInt(formulari.elements["form-0-gols2"].value);
-
-            var guanyador_id = null;
-            var perdedor_id = null;
-
-            if (gols1 > gols2) {
-                guanyador_id = equip1_id; perdedor_id = equip2_id;
-            } else if (gols2 > gols1) {
-                guanyador_id = equip2_id; perdedor_id = equip1_id;
-            } else {
-                var empat_els = formulari.elements["form-0-empat"];
-                if (empat_els) {
-                    for (var j = 0; j < empat_els.length; j++) {
-                        if (empat_els[j].checked) {
-                            if (empat_els[j].value == "1") {
-                                guanyador_id = equip1_id; perdedor_id = equip2_id;
-                            } else {
-                                guanyador_id = equip2_id; perdedor_id = equip1_id;
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (guanyador_id !== null) {
+            var resultat = guanyador_partit(formulari, 0);
+            if (resultat !== null) {
                 if (nom_grup === 'R') {
-                    // Final: campió=1, subcampió=2
                     var inp1 = document.createElement("input");
-                    inp1.type = "hidden"; inp1.name = "equip_1"; inp1.value = guanyador_id;
+                    inp1.type = "hidden"; inp1.name = "equip_1"; inp1.value = resultat.guanyador;
                     formulari.appendChild(inp1);
                     var inp2 = document.createElement("input");
-                    inp2.type = "hidden"; inp2.name = "equip_2"; inp2.value = perdedor_id;
+                    inp2.type = "hidden"; inp2.name = "equip_2"; inp2.value = resultat.perdedor;
                     formulari.appendChild(inp2);
                 } else {
-                    // Tercer/quart lloc: 3r=3, 4t=4
                     var inp3 = document.createElement("input");
-                    inp3.type = "hidden"; inp3.name = "equip_3"; inp3.value = guanyador_id;
+                    inp3.type = "hidden"; inp3.name = "equip_3"; inp3.value = resultat.guanyador;
                     formulari.appendChild(inp3);
                     var inp4 = document.createElement("input");
-                    inp4.type = "hidden"; inp4.name = "equip_4"; inp4.value = perdedor_id;
+                    inp4.type = "hidden"; inp4.name = "equip_4"; inp4.value = resultat.perdedor;
                     formulari.appendChild(inp4);
                 }
             }
         } else {
-            // Resta de rondes eliminatòries: enviem els guanyadors
             var equip_index = 0;
             for (var i = 0; i < num_partits; i++) {
-                var el_equip1 = formulari.elements["form-"+i+"-equip-1"];
-                var el_equip2 = formulari.elements["form-"+i+"-equip-2"];
-                if (!el_equip1 || !el_equip2) continue;
-
-                var equip1_id = parseInt(el_equip1.value);
-                var equip2_id = parseInt(el_equip2.value);
-                var gols1 = parseInt(formulari.elements["form-"+i+"-gols1"].value);
-                var gols2 = parseInt(formulari.elements["form-"+i+"-gols2"].value);
-                var guanyador_id = null;
-
-                if (gols1 > gols2) {
-                    guanyador_id = equip1_id;
-                } else if (gols2 > gols1) {
-                    guanyador_id = equip2_id;
-                } else {
-                    var empat_els = formulari.elements["form-"+i+"-empat"];
-                    if (empat_els) {
-                        for (var j = 0; j < empat_els.length; j++) {
-                            if (empat_els[j].checked) {
-                                guanyador_id = (empat_els[j].value == "1") ? equip1_id : equip2_id;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (guanyador_id !== null) {
+                var resultat = guanyador_partit(formulari, i);
+                if (resultat !== null) {
                     var input = document.createElement("input");
                     input.type = "hidden";
                     input.name = "equip_" + equip_index;
-                    input.value = guanyador_id;
+                    input.value = resultat.guanyador;
                     formulari.appendChild(input);
                     equip_index++;
                 }
             }
         }
+        return true;
+    };
+}
+
+// Inicialitza quan el DOM estigui llest
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        afegeix_equips_submit();
+        var formulari = document.getElementById("f1");
+        if (formulari && formulari.elements["form-0-equip-1"]) {
+            actualitza_eliminatoria();
+        }
     });
-});
+} else {
+    afegeix_equips_submit();
+    var formulari = document.getElementById("f1");
+    if (formulari && formulari.elements["form-0-equip-1"]) {
+        actualitza_eliminatoria();
+    }
+}
