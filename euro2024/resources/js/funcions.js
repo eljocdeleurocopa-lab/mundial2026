@@ -385,4 +385,53 @@ window.onload = function() {
     }
 };
 
+// Afegeix els equips guanyadors com a camps ocults abans d'enviar
+document.addEventListener('DOMContentLoaded', function() {
+    var formulari = document.getElementById("f1");
+    if (!formulari) return;
+    if (!formulari.elements["form-0-equip-1"]) return;
 
+    formulari.addEventListener('submit', function() {
+        var num_partits = parseInt(formulari.elements["num-partits"].value);
+        var equip_index = 0;
+
+        for (var i = 0; i < num_partits; i++) {
+            var el_equip1 = formulari.elements["form-"+i+"-equip-1"];
+            var el_equip2 = formulari.elements["form-"+i+"-equip-2"];
+            if (!el_equip1 || !el_equip2) continue;
+
+            var equip1_id = parseInt(el_equip1.value);
+            var equip2_id = parseInt(el_equip2.value);
+            var gols1 = parseInt(formulari.elements["form-"+i+"-gols1"].value);
+            var gols2 = parseInt(formulari.elements["form-"+i+"-gols2"].value);
+
+            var guanyador_id = null;
+
+            if (gols1 > gols2) {
+                guanyador_id = equip1_id;
+            } else if (gols2 > gols1) {
+                guanyador_id = equip2_id;
+            } else {
+                // Empat: mirem qui guanya als penals
+                var empat_els = formulari.elements["form-"+i+"-empat"];
+                if (empat_els) {
+                    for (var j = 0; j < empat_els.length; j++) {
+                        if (empat_els[j].checked) {
+                            guanyador_id = (empat_els[j].value == "1") ? equip1_id : equip2_id;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (guanyador_id !== null) {
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "equip_" + equip_index;
+                input.value = guanyador_id;
+                formulari.appendChild(input);
+                equip_index++;
+            }
+        }
+    });
+});
