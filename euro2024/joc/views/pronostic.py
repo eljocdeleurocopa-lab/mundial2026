@@ -133,6 +133,14 @@ def pronostic(request):
     # --- GET: mostrem el formulari ---
     grup = Grup.objects.get(nom=nom_grup)
 
+    # Si és una ronda eliminatòria (no setzens), recalculem els partits
+    # per si el jugador ha tornat enrere i modificat resultats anteriors
+    if nom_grup in CREAR_PARTITS and nom_grup not in SETZENS:
+        try:
+            crea_partits(request, jugador, nom_grup)
+        except Exception:
+            pass
+
     try:
         seguent_grup = Grup.objects.get(id=grup.id + 1).nom
     except Grup.DoesNotExist:
