@@ -210,16 +210,7 @@ function comprova_boto_inicial() {
         var g2 = formulari.elements["form-"+i+"-gols2"];
         if (!g1 || !g2) return;
         if (g1.value == "-1" || g2.value == "-1") return;
-        if (g1.value == g2.value) {
-            var empat_els = formulari.elements["form-"+i+"-empat"];
-            var empat_ok = false;
-            if (empat_els) {
-                for (var j = 0; j < empat_els.length; j++) {
-                    if (empat_els[j].checked) { empat_ok = true; break; }
-                }
-            }
-            if (!empat_ok) return;
-        }
+        // A la fase de grups l'empat no requereix selecció addicional
     }
     // Tots els partits ok — però la classificació de grups també ha d'estar completa
     // (el botó ja s'habilita via actualitza_grups quan es canvia un resultat)
