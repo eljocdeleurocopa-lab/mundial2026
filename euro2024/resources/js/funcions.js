@@ -223,7 +223,7 @@ function comprova_boto_inicial() {
     var classificacio_ok = true;
     for (var i = 0; i < 4; i++) {
         var id_el = formulari.elements["id"+i];
-        if (!id_el || id_el.value == "0" || id_el.value == "") {
+        if (!id_el || id_el.value == "" || parseInt(id_el.value) <= 0) {
             classificacio_ok = false;
             break;
         }
