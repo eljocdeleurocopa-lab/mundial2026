@@ -24,87 +24,151 @@ function genera_resultats(formulari) {
 }
 
 function ordena(ids_equips, resultats) {
+    // Calcula punts, diferència i gols TOTALS per cada equip
     var equips = [];
-    for (var i = 0; i<ids_equips.length; i++) {
+    for (var i = 0; i < ids_equips.length; i++) {
         equips.push({'id': ids_equips[i], 'punts': 0, 'gols': 0, 'diferencia': 0});
     }
-    for (var i = 0; i<ids_equips.length; i++) {
-        for (var j = i + 1; j<ids_equips.length; j++) {
-            id_equip1 = ids_equips[i]; id_equip2 = ids_equips[j];
-            gols_equip1 = resultats[id_equip1][id_equip2];
-            gols_equip2 = resultats[id_equip2][id_equip1];
-            if (gols_equip1 == null || gols_equip2 == null) { continue; }
-            if (gols_equip1 > gols_equip2) { _.findWhere(equips, {'id':id_equip1}).punts += 3; }
-            else if (gols_equip2 > gols_equip1) { _.findWhere(equips, {'id':id_equip2}).punts += 3; }
-            else { _.findWhere(equips, {'id':id_equip1}).punts += 1; _.findWhere(equips, {'id':id_equip2}).punts += 1; }
-            _.findWhere(equips, {'id':id_equip1}).gols += gols_equip1;
-            _.findWhere(equips, {'id':id_equip2}).gols += gols_equip2;
-            _.findWhere(equips, {'id':id_equip1}).diferencia += gols_equip1 - gols_equip2;
-            _.findWhere(equips, {'id':id_equip2}).diferencia += gols_equip2 - gols_equip1;
+    for (var i = 0; i < ids_equips.length; i++) {
+        for (var j = i + 1; j < ids_equips.length; j++) {
+            var id1 = ids_equips[i]; var id2 = ids_equips[j];
+            var g1 = resultats[id1][id2]; var g2 = resultats[id2][id1];
+            if (g1 == null || g2 == null) continue;
+            if (g1 > g2) { _.findWhere(equips,{'id':id1}).punts += 3; }
+            else if (g2 > g1) { _.findWhere(equips,{'id':id2}).punts += 3; }
+            else { _.findWhere(equips,{'id':id1}).punts += 1; _.findWhere(equips,{'id':id2}).punts += 1; }
+            _.findWhere(equips,{'id':id1}).gols += g1;
+            _.findWhere(equips,{'id':id2}).gols += g2;
+            _.findWhere(equips,{'id':id1}).diferencia += (g1 - g2);
+            _.findWhere(equips,{'id':id2}).diferencia += (g2 - g1);
         }
     }
     return _(equips).chain().sortBy('gols').sortBy('diferencia').sortBy('punts').reverse().value();
 }
 
-function classifica(resultats, equips, tipus, equips_totals) {
-    var error = 0;
-    if (TORNEIG == 'mundial') {
-        var agrupa = function(objA, objB) { return objA.punts == objB.punts && objA.diferencia == objB.diferencia && objA.gols == objB.gols; };
-        var agrupats = _.groupBy(equips, function(obj){ return obj.punts+"-"+obj.diferencia+"-"+obj.gols; });
-    } else {
-        if (tipus == 'punts') {
-            var agrupa = function(objA, objB) { return objA.punts == objB.punts; };
-            var agrupats = _.groupBy(equips, 'punts');
-        } else {
-            var agrupa = function(objA, objB) { return objA.diferencia == objB.diferencia && objA.gols == objB.gols; };
-            var agrupats = _.groupBy(equips, function(obj){ return obj.diferencia+"-"+obj.gols; });
+function stats_cap_a_cap(ids_equips, resultats) {
+    // Calcula punts, diferència i gols NOMÉS entre els equips donats
+    var stats = {};
+    for (var i = 0; i < ids_equips.length; i++) {
+        stats[ids_equips[i]] = {id: ids_equips[i], punts: 0, diferencia: 0, gols: 0};
+    }
+    for (var i = 0; i < ids_equips.length; i++) {
+        for (var j = i + 1; j < ids_equips.length; j++) {
+            var id1 = ids_equips[i]; var id2 = ids_equips[j];
+            var g1 = resultats[id1][id2]; var g2 = resultats[id2][id1];
+            if (g1 == null || g2 == null) continue;
+            if (g1 > g2) { stats[id1].punts += 3; }
+            else if (g2 > g1) { stats[id2].punts += 3; }
+            else { stats[id1].punts += 1; stats[id2].punts += 1; }
+            stats[id1].gols += g1; stats[id2].gols += g2;
+            stats[id1].diferencia += (g1 - g2); stats[id2].diferencia += (g2 - g1);
         }
     }
-    if (Object.keys(agrupats).length == equips.length) { return [equips, error]; }
-    else if (Object.keys(agrupats).length == 1) {
-        if (TORNEIG == 'mundial' && equips.length == NUM_TEAMS_PER_GROUP) { error = 1; }
-        else if (TORNEIG == 'euro' && equips.length == NUM_TEAMS_PER_GROUP && tipus == 'altres') { error = 1; }
-        else if (equips.length < NUM_TEAMS_PER_GROUP) { error = 1; }
-        else {
-            var new_classificats = Array();
-            var resultat_sub_classifica = classifica(resultats, equips, 'altres', equips_totals);
-            var sub_classifica = resultat_sub_classifica[0]; error = resultat_sub_classifica[1];
-            for (var j = 0; j < sub_classifica.length; j++) { new_classificats.push(_.findWhere(equips, {'id':sub_classifica[j].id})); }
-            equips = new_classificats;
+    return stats;
+}
+
+function classifica(equips_ordenats_totals, resultats) {
+    /*
+     * Implementació de l'Article 13 del Reglament FIFA 2026.
+     *
+     * Step 1: Cap a cap (punts, diferència, gols) entre empatats
+     * Step 2: Totals (diferència, gols) — fair play i FIFA ranking no implementats
+     *
+     * Retorna [equips_ordenats, hi_ha_empat_irresolt]
+     */
+
+    var resultat_final = [];
+    var error = 0;
+
+    // Agrupem per punts totals (primer criteri)
+    var grups_per_punts = {};
+    for (var i = 0; i < equips_ordenats_totals.length; i++) {
+        var e = equips_ordenats_totals[i];
+        var k = e.punts;
+        if (!grups_per_punts[k]) grups_per_punts[k] = [];
+        grups_per_punts[k].push(e);
+    }
+
+    // Processem cada grup d'equips amb els mateixos punts
+    var punts_keys = Object.keys(grups_per_punts).map(Number).sort(function(a,b){return b-a;});
+
+    for (var ki = 0; ki < punts_keys.length; ki++) {
+        var grup = grups_per_punts[punts_keys[ki]];
+
+        if (grup.length === 1) {
+            resultat_final.push(grup[0]);
+            continue;
         }
-    } else {
-        var i = 0; var new_classificats = Array();
-        while(i < equips.length) {
-            if (i == (equips.length - 1) || !agrupa(equips[i], equips[i + 1])) { new_classificats.push(equips[i]); }
-            else {
-                var sub_ids = Array(); sub_ids.push(equips[i].id); i++;
-                while(i < (equips.length - 1) && agrupa(equips[i], equips[i + 1])) { sub_ids.push(equips[i].id); i++; }
-                sub_ids.push(equips[i].id);
-                var sub_equips = ordena(sub_ids, resultats);
-                var resultat_sub_classifica = classifica(resultats, sub_equips, 'punts', equips_totals);
-                var sub_classifica = resultat_sub_classifica[0]; error = resultat_sub_classifica[1];
-                if (error == 1) {
-                    var resultat_sub_classifica2 = classifica(resultats, sub_equips, 'altres', equips_totals);
-                    var sub_classifica2 = resultat_sub_classifica2[0]; error2 = resultat_sub_classifica2[1];
-                    if (error2 == 0) { error = 0; sub_classifica = sub_classifica2; }
-                    else {
-                        var sub_equips2 = Array();
-                        for (var j = 0; j < equips_totals.length; j++) {
-                            var t = _.findWhere(sub_equips, {'id': equips_totals[j].id});
-                            if (t != null) { sub_equips2.push(_.findWhere(equips_totals, {'id': equips_totals[j].id})); }
-                        }
-                        var resultat_sub_classifica3 = classifica(resultats, sub_equips2, 'altres', equips_totals);
-                        var sub_classifica3 = resultat_sub_classifica3[0]; error3 = resultat_sub_classifica3[1];
-                        if (error3 == 0) { error = 0; sub_classifica = sub_classifica3; }
+
+        // Hi ha empat — apliquem Step 1: cap a cap
+        var ids = grup.map(function(e){ return e.id; });
+        var cac = stats_cap_a_cap(ids, resultats);
+        var cac_array = ids.map(function(id){ return cac[id]; });
+        cac_array = _(cac_array).chain().sortBy('gols').sortBy('diferencia').sortBy('punts').reverse().value();
+
+        // Comprovem si el cap a cap ha resolt l'empat
+        var sub_grups = {};
+        for (var i = 0; i < cac_array.length; i++) {
+            var e = cac_array[i];
+            var k = e.punts + '_' + e.diferencia + '_' + e.gols;
+            if (!sub_grups[k]) sub_grups[k] = [];
+            sub_grups[k].push(e.id);
+        }
+
+        if (Object.keys(sub_grups).length === cac_array.length) {
+            // Cap a cap ha resolt tot
+            for (var i = 0; i < cac_array.length; i++) {
+                resultat_final.push(_.findWhere(equips_ordenats_totals, {id: cac_array[i].id}));
+            }
+            continue;
+        }
+
+        // Empat parcial — Step 2: diferència i gols totals per als que segueixen empatats
+        // Construïm l'ordre final combinant cap a cap i totals
+        var sub_keys = Object.keys(sub_grups);
+        // Ordenem sub_grups per punts cac desc
+        sub_keys.sort(function(a, b) {
+            var pa = parseInt(a.split('_')[0]); var pb = parseInt(b.split('_')[0]);
+            var da = parseInt(a.split('_')[1]); var db = parseInt(b.split('_')[1]);
+            var ga = parseInt(a.split('_')[2]); var gb = parseInt(b.split('_')[2]);
+            if (pa !== pb) return pb - pa;
+            if (da !== db) return db - da;
+            return gb - ga;
+        });
+
+        for (var si = 0; si < sub_keys.length; si++) {
+            var sub_ids = sub_grups[sub_keys[si]];
+            if (sub_ids.length === 1) {
+                resultat_final.push(_.findWhere(equips_ordenats_totals, {id: sub_ids[0]}));
+            } else {
+                // Segueixen empatats — Step 2: totals (diferència i gols)
+                var sub_equips = sub_ids.map(function(id){
+                    return _.findWhere(equips_ordenats_totals, {id: id});
+                });
+                sub_equips = _(sub_equips).chain().sortBy('gols').sortBy('diferencia').reverse().value();
+
+                // Comprovem si els totals han resolt l'empat
+                var tots_diferents = true;
+                for (var i = 0; i < sub_equips.length - 1; i++) {
+                    if (sub_equips[i].diferencia === sub_equips[i+1].diferencia &&
+                        sub_equips[i].gols === sub_equips[i+1].gols) {
+                        tots_diferents = false;
+                        break;
                     }
                 }
-                for (var j = 0; j < sub_classifica.length; j++) { new_classificats.push(_.findWhere(equips, {'id':sub_classifica[j].id})); }
+
+                if (!tots_diferents) {
+                    error = 1; // Empat irresolt (necessitaria fair play o FIFA ranking)
+                }
+
+                for (var i = 0; i < sub_equips.length; i++) {
+                    resultat_final.push(sub_equips[i]);
+                }
             }
-            i++;
         }
-        equips = new_classificats;
     }
-    return [equips, error];
+
+    return [resultat_final, error];
 }
 
 function actualitza_grups() {
@@ -127,9 +191,8 @@ function actualitza_grups() {
     }
     var tupla_resultats = genera_resultats(formulari);
     var resultats = tupla_resultats[0]; var acabat = tupla_resultats[1];
-    var classificats = ordena(ids_equips, resultats);
-    var classificats_totals = classificats;
-    var resultat_classificats = classifica(resultats, classificats, 'punts', classificats_totals);
+    var classificats_totals = ordena(ids_equips, resultats);
+    var resultat_classificats = classifica(classificats_totals, resultats);
     var classificats = resultat_classificats[0]; var error = resultat_classificats[1];
     document.ban0.src = banderes_equips[classificats[0].id];
     document.ban1.src = banderes_equips[classificats[1].id];
