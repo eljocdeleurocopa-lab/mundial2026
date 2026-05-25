@@ -5,6 +5,57 @@
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/estil_usuaris.css" %}">
+<style>
+#classificacio_taula {
+    width: 800px;
+    margin: auto;
+    margin-top: 40px;
+    clear: both;
+    background-color: #dddddd;
+    font-family: Verdana;
+    font-size: 12px;
+    border-collapse: collapse;
+}
+#classificacio_taula th {
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 5px 8px;
+}
+#classificacio_taula td {
+    padding: 4px 8px;
+    text-align: center;
+}
+#classificacio_taula td.nom {
+    text-align: left;
+}
+.fila_normal { background-color: #eeeeee; }
+.fila_jo { background-color: #cccccc; font-weight: bold; }
+.fletxa_amunt {
+    color: green;
+    font-weight: bold;
+    font-size: 13px;
+}
+.fletxa_avall {
+    color: red;
+    font-weight: bold;
+    font-size: 13px;
+}
+.fletxa_igual {
+    color: #666;
+    font-weight: bold;
+}
+.ultima_actualitzacio {
+    text-align: center;
+    font-family: Verdana;
+    font-size: 11px;
+    color: #666;
+    margin-top: 8px;
+}
+</style>
 {% endblock stylesheets %}
 
 {% block title %}Classificació{% endblock %}
@@ -15,46 +66,38 @@
 {% endblock navegacio %}
 
 {% block content %}
-<div class="requadre">
-  <h1>Classificació</h1>
-  <p class="ultima_actualitzacio">Última actualització: {{ ultima_actualitzacio }}</p>
 
-  <table class="taulaclassificacio" width="100%">
-    <tr>
-      <th>Pos</th>
-      <th></th>
-      <th>Jugador</th>
-      <th>Punts</th>
-      <th></th>
-    </tr>
-    {% for jugador in object_list %}
-    <tr class="{% cycle 'fila_parell' 'fila_senar' %}">
-      <td align="center">
-        {{ jugador.posicio }}
-        {% if jugador.dif_pos > 0 %}
-          <span class="puja">▲{{ jugador.dif_pos }}</span>
-        {% elif jugador.dif_pos < 0 %}
-          <span class="baixa">▼{{ jugador.dif_pos|cut:"-" }}</span>
-        {% else %}
-          <span class="igual">–</span>
-        {% endif %}
-      </td>
-      <td align="center">
-        {% if jugador == request.user.jugador %}
-          <span class="tu">★</span>
-        {% endif %}
-      </td>
-      <td>{{ jugador.usuari.first_name|default:jugador.usuari.username }}</td>
-      <td align="center"><strong>{{ jugador.punts }}</strong></td>
-      <td align="center">
-        {% if jugador.dif_punts > 0 %}
-          <span class="puja">(+{{ jugador.dif_punts }})</span>
-        {% elif jugador.dif_punts < 0 %}
-          <span class="baixa">({{ jugador.dif_punts }})</span>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
+<p class="ultima_actualitzacio">Última actualització: {{ ultima_actualitzacio }}</p>
+
+<table id="classificacio_taula">
+  <tr>
+    <th>Pos</th>
+    <th>▲▼</th>
+    <th>Jugador</th>
+    <th>Punts</th>
+    <th>Partits</th>
+    <th>Grups</th>
+    <th>Emparell.</th>
+  </tr>
+  {% for jugador in object_list %}
+  <tr class="{% if jugador.usuari == request.user %}fila_jo{% else %}fila_normal{% endif %}">
+    <td>{{ jugador.posicio }}</td>
+    <td>
+      {% if jugador.dif_pos > 0 %}
+        <span class="fletxa_amunt">▲{{ jugador.dif_pos }}</span>
+      {% elif jugador.dif_pos < 0 %}
+        <span class="fletxa_avall">▼{{ jugador.dif_pos|cut:"-" }}</span>
+      {% else %}
+        <span class="fletxa_igual">=</span>
+      {% endif %}
+    </td>
+    <td class="nom">{{ jugador.usuari.first_name|default:jugador.usuari.username }}</td>
+    <td><strong>{{ jugador.punts }}</strong></td>
+    <td>{{ jugador.punts_resultats }}</td>
+    <td>{{ jugador.punts_grups }}</td>
+    <td>{{ jugador.punts_equips_encertats }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 {% endblock %}
