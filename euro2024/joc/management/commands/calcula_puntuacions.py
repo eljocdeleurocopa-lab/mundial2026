@@ -30,27 +30,27 @@ PUNTS_CLASSIFICACIO_GRUP = {1: 2, 2: 4, 4: 10}
 # --- Setzens de final: equips classificats (32 encerts possibles) ---
 PUNTS_EQUIPS_SETZENS = {
     1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1,
-    7: 2, 8: 2, 9: 2, 10: 2, 11: 2,
-    12: 4, 13: 4, 14: 4, 15: 4,
-    16: 7, 17: 7, 18: 7,
-    19: 10, 20: 10,
-    21: 14,
-    22: 18,
-    23: 22,
-    24: 26,
-    25: 30,
-    26: 35,
-    27: 40,
-    28: 45,
-    29: 51,
-    30: 57,
-    31: 63,
+    7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1,
+    13: 2, 14: 2, 15: 2, 16: 2,
+    17: 4, 18: 4, 19: 4,
+    20: 7, 21: 7,
+    22: 10,
+    23: 14,
+    24: 18,
+    25: 23,
+    26: 28,
+    27: 34,
+    28: 40,
+    29: 47,
+    30: 55,
+    31: 64,
     32: 75,
 }
 
-# --- Setzens de final: partits ---
-PUNTS_SIGNE_SETZENS    = 5
-PUNTS_RESULTAT_SETZENS = 7
+# --- Setzens de final: partits (sense punts per posició) ---
+PUNTS_EQUIP_POSICIO_SETZENS = 0
+PUNTS_SIGNE_SETZENS         = 5
+PUNTS_RESULTAT_SETZENS      = 7
 
 # --- Vuitens de final: equips classificats (16 encerts possibles) ---
 PUNTS_EQUIPS_VUITENS = {
@@ -59,9 +59,10 @@ PUNTS_EQUIPS_VUITENS = {
     11: 26, 12: 33, 13: 41, 14: 50, 15: 60, 16: 75,
 }
 
-# --- Vuitens de final: partits ---
-PUNTS_SIGNE_VUITENS    = 5
-PUNTS_RESULTAT_VUITENS = 7
+# --- Vuitens de final: partits (amb punts per posició, igual que quarts) ---
+PUNTS_EQUIP_POSICIO_VUITENS = 5
+PUNTS_SIGNE_VUITENS         = 5
+PUNTS_RESULTAT_VUITENS      = 7
 
 # --- Quarts de final: equips classificats (8 encerts possibles) ---
 PUNTS_EQUIPS_QUARTS = {
@@ -69,7 +70,7 @@ PUNTS_EQUIPS_QUARTS = {
 }
 
 # --- Quarts de final: partits ---
-PUNTS_EQUIP_POSICIO_QUARTS = 5
+PUNTS_EQUIP_POSICIO_QUARTS = 7
 PUNTS_SIGNE_QUARTS         = 7
 PUNTS_RESULTAT_QUARTS      = 10
 
@@ -85,7 +86,7 @@ PUNTS_RESULTAT_SEMIS      = 14
 PUNTS_EQUIPS_TERCER = {1: 15, 2: 40}
 
 # --- Tercer i quart lloc: partit ---
-PUNTS_EQUIP_POSICIO_TERCER = 10
+PUNTS_EQUIP_POSICIO_TERCER = 12
 PUNTS_SIGNE_TERCER         = 14
 PUNTS_RESULTAT_TERCER      = 20
 
@@ -93,7 +94,7 @@ PUNTS_RESULTAT_TERCER      = 20
 PUNTS_EQUIPS_FINAL = {1: 30, 2: 75}
 
 # --- Final: partit ---
-PUNTS_EQUIP_POSICIO_FINAL = 10
+PUNTS_EQUIP_POSICIO_FINAL = 15
 PUNTS_SIGNE_FINAL         = 14
 PUNTS_RESULTAT_FINAL      = 20
 
@@ -153,30 +154,26 @@ def _punts_partit_eliminatoria(partit, pronostic,
     Puntuació d'un partit de ronda eliminatòria.
 
     Regles:
+    - Punts per posició d'equip s'acumulen sempre (si punts_posicio > 0).
     - Per puntuar signe o resultat, cal tenir els 2 equips en posició correcta.
-    - Si es té 1 sol equip en posició correcta: punts_posicio (per a quarts/semis/tercer/final).
-      Per a setzens i vuitens no hi ha punts per equip en posició correcta.
-    - Signe i resultat no són acumulables (s'aplica el més alt).
+    - Signe i resultat s'acumulen amb els punts de posició.
+    - Signe i resultat no són acumulables entre ells (s'aplica el més alt).
     """
     equip1_ok, equip2_ok = _equips_correctes_pronostic(pronostic, partit)
     tots_ok = equip1_ok and equip2_ok
+    encerts = (1 if equip1_ok else 0) + (1 if equip2_ok else 0)
 
+    # Punts per posició (sempre s'acumulen)
+    punts = punts_posicio * encerts
+
+    # Punts per resultat o signe (només si els 2 equips són correctes)
     if tots_ok:
         if partit.resultat_encertat(pronostic):
-            return punts_resultat
+            punts += punts_resultat
         elif partit.signe_encertat(pronostic):
-            return punts_signe
-        else:
-            # Té els 2 equips correctes però no encerta resultat ni signe
-            # Per a quarts/semis/tercer/final, punts_posicio s'aplica per equip
-            if punts_posicio > 0:
-                return punts_posicio * 2
-            return 0
-    else:
-        # 1 sol equip correcte → punts_posicio per a quarts, semis, tercer, final
-        # Per a setzens i vuitens, punts_posicio = 0
-        encerts = (1 if equip1_ok else 0) + (1 if equip2_ok else 0)
-        return punts_posicio * encerts
+            punts += punts_signe
+
+    return punts
 
 
 # =============================================================================
@@ -193,7 +190,7 @@ def calcula_puntuacions_jugador(jugador):
     punts_resultats = 0
     partits_grups = Partit.objects.filter(
         pk__in=RANG_PARTITS_GRUPS,
-        gols1__gte=0, gols2__gte=0,  # només partits jugats
+        gols1__gte=0, gols2__gte=0,
     )
     for partit in partits_grups:
         try:
@@ -214,68 +211,44 @@ def calcula_puntuacions_jugador(jugador):
             equip__grup_id=grup_id,
             posicio__gt=0,
         )
-        encerts = 0
-        for peg in pronostics_grup:
-            # Comprovem si la posició pronosticada coincideix amb la real
-            from joc.models import PronosticEquipGrup as PEG
-            try:
-                real = PEG.objects.get(
-                    jugador__isnull=True,  # registre "real" guardat per l'admin
-                    equip=peg.equip,
-                )
-                # Alternativa: comparar amb la posició real guardada per l'admin
-                # en un model separat. Implementació segons el patró de l'Eurocopa:
-                # la posició real s'obté dels PronosticEquipGrup de l'usuari admin.
-                pass
-            except Exception:
-                pass
-
-        # Implementació real: comparem les posicions del jugador
-        # amb les posicions de l'admin (jugador amb ID = settings.ID_ADMIN)
         from django.conf import settings as django_settings
         try:
             admin_jugador = Jugador.objects.get(pk=django_settings.ID_ADMIN)
         except Jugador.DoesNotExist:
-            admin_jugador = None
+            continue
 
-        if admin_jugador:
-            encerts = 0
-            for peg in pronostics_grup:
-                try:
-                    peg_admin = PronosticEquipGrup.objects.get(
-                        jugador=admin_jugador,
-                        equip=peg.equip,
-                    )
-                    if peg.posicio == peg_admin.posicio:
-                        encerts += 1
-                except PronosticEquipGrup.DoesNotExist:
-                    continue
-            punts_grups += _punts_classificacio_grup(encerts)
+        encerts = 0
+        for peg in pronostics_grup:
+            try:
+                real = PronosticEquipGrup.objects.get(
+                    jugador=admin_jugador,
+                    equip=peg.equip,
+                )
+                if real.posicio == peg.posicio:
+                    encerts += 1
+            except PronosticEquipGrup.DoesNotExist:
+                pass
 
-    # ----- 3. EQUIPS CLASSIFICATS: SETZENS -----
+        punts_grups += _punts_classificacio_grup(encerts)
+
+    # ----- 3. EQUIPS CLASSIFICATS PER RONDA -----
     punts_equips_encertats = 0
 
-    # Setzens (32 encerts possibles)
     encerts_setzens = _calcula_equips_encertats_fase(jugador, FASE_SETZENS)
     punts_equips_encertats += _punts_equips_fase(encerts_setzens, PUNTS_EQUIPS_SETZENS)
 
-    # Vuitens (16 encerts possibles)
     encerts_vuitens = _calcula_equips_encertats_fase(jugador, FASE_VUITENS)
     punts_equips_encertats += _punts_equips_fase(encerts_vuitens, PUNTS_EQUIPS_VUITENS)
 
-    # Quarts (8 encerts possibles)
     encerts_quarts = _calcula_equips_encertats_fase(jugador, FASE_QUARTS)
     punts_equips_encertats += _punts_equips_fase(encerts_quarts, PUNTS_EQUIPS_QUARTS)
 
-    # Semis (4 encerts possibles)
     encerts_semis = _calcula_equips_encertats_fase(jugador, FASE_SEMIS)
     punts_equips_encertats += _punts_equips_fase(encerts_semis, PUNTS_EQUIPS_SEMIS)
 
-    # Tercer/quart (2 encerts possibles)
     encerts_tercer = _calcula_equips_encertats_fase(jugador, FASE_TERCER)
     punts_equips_encertats += _punts_equips_fase(encerts_tercer, PUNTS_EQUIPS_TERCER)
 
-    # Final (2 encerts possibles)
     encerts_final_equips = _calcula_equips_encertats_fase(jugador, FASE_FINAL)
     punts_equips_encertats += _punts_equips_fase(encerts_final_equips, PUNTS_EQUIPS_FINAL)
 
@@ -284,7 +257,7 @@ def calcula_puntuacions_jugador(jugador):
     for id_partit in RANG_PARTITS_SETZENS:
         punts_setzens += _punts_ronda_eliminatoria(
             jugador, id_partit,
-            punts_posicio=0,
+            punts_posicio=PUNTS_EQUIP_POSICIO_SETZENS,
             punts_signe=PUNTS_SIGNE_SETZENS,
             punts_resultat=PUNTS_RESULTAT_SETZENS,
         )
@@ -294,7 +267,7 @@ def calcula_puntuacions_jugador(jugador):
     for id_partit in RANG_PARTITS_VUITENS:
         punts_vuitens += _punts_ronda_eliminatoria(
             jugador, id_partit,
-            punts_posicio=0,
+            punts_posicio=PUNTS_EQUIP_POSICIO_VUITENS,
             punts_signe=PUNTS_SIGNE_VUITENS,
             punts_resultat=PUNTS_RESULTAT_VUITENS,
         )
@@ -352,19 +325,18 @@ def calcula_puntuacions_jugador(jugador):
         + punts_quadre_final
     )
 
-    # Guardem els punts anteriors per al moviment del rànquing
-    jugador.punts_anterior        = jugador.punts
-    jugador.punts                 = total
-    jugador.punts_resultats       = punts_resultats
-    jugador.punts_grups           = punts_grups
+    jugador.punts_anterior         = jugador.punts
+    jugador.punts                  = total
+    jugador.punts_resultats        = punts_resultats
+    jugador.punts_grups            = punts_grups
     jugador.punts_equips_encertats = punts_equips_encertats
-    jugador.punts_setzens         = punts_setzens
-    jugador.punts_vuitens         = punts_vuitens
-    jugador.punts_quarts          = punts_quarts
-    jugador.punts_semis           = punts_semis
-    jugador.punts_tercer          = punts_tercer
-    jugador.punts_final           = punts_final
-    jugador.punts_quadre_final    = punts_quadre_final
+    jugador.punts_setzens          = punts_setzens
+    jugador.punts_vuitens          = punts_vuitens
+    jugador.punts_quarts           = punts_quarts
+    jugador.punts_semis            = punts_semis
+    jugador.punts_tercer           = punts_tercer
+    jugador.punts_final            = punts_final
+    jugador.punts_quadre_final     = punts_quadre_final
     jugador.save()
 
     return total
@@ -405,7 +377,6 @@ def _punts_ronda_eliminatoria(jugador, id_partit,
     except Partit.DoesNotExist:
         return 0
 
-    # Partit no jugat encara
     if partit.gols1 < 0 or partit.gols2 < 0:
         return 0
 
@@ -432,7 +403,6 @@ def _calcula_quadre_final(jugador):
 
     punts = 0
 
-    # Posicions 1 i 2 (Final)
     for fase in [FASE_FINAL, FASE_TERCER]:
         pronostics_admin = {
             pef.equip_id: pef.posicio
@@ -461,7 +431,6 @@ def _calcula_quadre_final(jugador):
 def actualitza_ranking():
     """
     Ordena tots els jugadors per punts (descendent) i assigna les posicions.
-    En cas d'empat, l'ordre és aleatori (ordre natural de la BD).
     """
     jugadors = list(Jugador.objects.all().order_by('-punts', 'id'))
     for i, jugador in enumerate(jugadors):

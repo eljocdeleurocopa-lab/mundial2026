@@ -89,7 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # --- Internacionalització ---
 LANGUAGE_CODE = 'ca'
-TIME_ZONE     = 'America/New_York'  # El Mundial 2026 es juga a USA/Canadà/Mèxic
+TIME_ZONE     = 'America/New_York' # El Mundial 2026 es juga a USA/Canadà/Mèxic
 USE_I18N      = True
 USE_L10N      = True
 USE_TZ        = True
@@ -151,3 +151,4 @@ ID_ADMIN        = 1
 NUM_PARTITS       = 104   # era 51 a l'Eurocopa
 NUM_PARTITS_GRUPS = 72    # era 36 a l'Eurocopa
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+FASE_MUNDIAL = os.getenv('FASE_MUNDIAL', 'pronostics')

@@ -74,36 +74,52 @@ def pronostic(request):
         if grup_form.is_valid():
             grup_form.save()
         else:
-            # TODO: pàgina d'error i notificació
             pass
+
+        # El grup actual (d'on venim) és el camp POST 'nom-grup'
+        # nom_grup (GET) és el grup destí (on anem)
+        grup_actual = request.POST.get('nom-grup', nom_grup)
 
         # Guardem classificació d'equips del grup anterior
         if nom_grup in GUARDA_GRUPS:
             guarda_classificacio_grup(request, jugador)
 
         # Guardem pronòstics d'equips classificats (rondes eliminatòries)
-        if nom_grup in SETZENS:
-            _guarda_equips_fase(request, jugador, FASE_SETZENS, 32)
-        elif nom_grup in VUITENS:
+        # participant_X = tots els equips de la fase actual
+        # equip_X = guanyadors (equips que passen a la fase seguent)
+        if grup_actual in SETZENS:
+            # 32 participants als setzens
+            _guarda_equips_fase_participants(request, jugador, FASE_SETZENS, 32)
+            # 16 guanyadors dels setzens -> passen als vuitens
             _guarda_equips_fase(request, jugador, FASE_VUITENS, 16)
-        elif nom_grup in QUARTS:
+        elif grup_actual in VUITENS:
+            # 16 participants als vuitens
+            _guarda_equips_fase_participants(request, jugador, FASE_VUITENS, 16)
+            # 8 guanyadors dels vuitens -> passen als quarts
             _guarda_equips_fase(request, jugador, FASE_QUARTS, 8)
-        elif nom_grup in SEMIS:
+        elif grup_actual in QUARTS:
+            # 8 participants als quarts
+            _guarda_equips_fase_participants(request, jugador, FASE_QUARTS, 8)
+            # 4 guanyadors dels quarts -> passen a semis
             _guarda_equips_fase(request, jugador, FASE_SEMIS, 4)
-        elif nom_grup in TERCER:
+        elif grup_actual in SEMIS:
+            # 4 participants a semis
+            _guarda_equips_fase_participants(request, jugador, FASE_SEMIS, 4)
+            # els guanyadors/perdedors es guarden via TERCER i FINAL
+        elif grup_actual in TERCER:
             _guarda_equips_posicio_fase(request, jugador, FASE_TERCER, [3, 4])
-        elif nom_grup in FINAL:
+        elif grup_actual in FINAL:
             _guarda_equips_posicio_fase(request, jugador, FASE_FINAL, [1, 2])
 
         # Creem els partits de la nova ronda si cal
-        if nom_grup in CREAR_PARTITS:
-            crea_partits(request, jugador, nom_grup)
+        if grup_actual in CREAR_PARTITS:
+            crea_partits(request, jugador, grup_actual)
 
         # Comprovem si hi ha tercers empatats (posició 8/9) — Mundial 2026
-        if nom_grup in SETZENS:
+        if grup_actual in SETZENS:
             tercers_empatats = comprova_tercers(request, jugador)
             if tercers_empatats:
-                grup = Grup.objects.get(nom='L')  # últim grup de fase de grups
+                grup = Grup.objects.get(nom='L')
                 grup_form_actual = GrupForm(
                     queryset=PronosticPartit.objects.filter(
                         jugador=jugador, partit__grup=grup
@@ -130,14 +146,21 @@ def pronostic(request):
     # --- GET: mostrem el formulari ---
     grup = Grup.objects.get(nom=nom_grup)
 
+    # Si és una ronda eliminatòria (no setzens), recalculem els partits
+    # per si el jugador ha tornat enrere i modificat resultats anteriors
+    if nom_grup in CREAR_PARTITS and nom_grup not in SETZENS:
+        try:
+            crea_partits(request, jugador, nom_grup)
+        except Exception:
+            pass
+
     try:
         seguent_grup = Grup.objects.get(id=grup.id + 1).nom
     except Grup.DoesNotExist:
-        seguent_grup = 'S'  # codi final que acaba el pronòstic
+        seguent_grup = 'S'
 
     partits = Partit.objects.filter(grup=grup).order_by("diaihora")
 
-    # Creem els PronosticPartit que faltin
     for partit in partits:
         items = {}
         if nom_grup in FASE_GRUPS:
@@ -146,10 +169,11 @@ def pronostic(request):
         PronosticPartit.objects.get_or_create(jugador=jugador, partit=partit, **items)
 
     grup_form = GrupForm(
-        queryset=PronosticPartit.objects.filter(jugador=jugador, partit__grup=grup).order_by("partit__diaihora")
+        queryset=PronosticPartit.objects.filter(
+            jugador=jugador, partit__grup=grup
+        ).order_by("partit__diaihora")
     )
 
-    # Dades per al template de fase de grups
     equips_classificacio = []
     deshabilita_submit = False
 
@@ -163,7 +187,6 @@ def pronostic(request):
             if equip_classificacio.posicio == 0:
                 tots_amb_posicio = False
 
-    # Comprovem que tots els partits del grup tinguin pronòstic vàlid
         tots_partits_ok = True
         for form in grup_form.forms:
             inst = form.instance
@@ -176,7 +199,6 @@ def pronostic(request):
 
         deshabilita_submit = not (tots_amb_posicio and tots_partits_ok)
     else:
-        # Rondes eliminatòries: comprovem que tots els partits tinguin pronòstic
         for form in grup_form.forms:
             inst = form.instance
             if inst.gols1 == -1 or inst.gols2 == -1:
@@ -202,7 +224,6 @@ def pronostic(request):
         }
     )
 
-    # Evitem problemes amb el botó Enrere del navegador
     response["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response["Pragma"] = "no-cache"
     response["Expires"] = "0"
@@ -215,16 +236,7 @@ def pronostic(request):
 # =============================================================================
 
 def _guarda_equips_fase(request, jugador, fase, num_equips):
-    """
-    Guarda els pronòstics d'equips classificats per a una ronda eliminatòria
-    (setzens, vuitens, quarts, semis) on no cal especificar posició,
-    només si l'equip passa o no.
-
-    Espera els paràmetres POST: equip_0, equip_1, ..., equip_{n-1}
-    """
-    # Esborrem els pronòstics anteriors d'aquesta fase per evitar duplicats
     PronosticEquipFase.objects.filter(jugador=jugador, fase=fase).delete()
-
     for i in range(num_equips):
         equip_id = request.POST.get(f'equip_{i}')
         if equip_id:
@@ -240,15 +252,25 @@ def _guarda_equips_fase(request, jugador, fase, num_equips):
                 pass
 
 
-def _guarda_equips_posicio_fase(request, jugador, fase, posicions):
-    """
-    Guarda els pronòstics d'equips classificats per a una ronda on
-    cal especificar la posició (tercer/quart lloc i final).
-
-    Espera els paràmetres POST: equip_{posicio} (p.ex. equip_1, equip_2)
-    """
+def _guarda_equips_fase_participants(request, jugador, fase, num_equips):
     PronosticEquipFase.objects.filter(jugador=jugador, fase=fase).delete()
+    for i in range(num_equips):
+        equip_id = request.POST.get(f'participant_{i}')
+        if equip_id:
+            try:
+                equip = Equip.objects.get(pk=int(equip_id))
+                PronosticEquipFase.objects.get_or_create(
+                    jugador=jugador,
+                    fase=fase,
+                    equip=equip,
+                    defaults={'posicio': 0},
+                )
+            except (Equip.DoesNotExist, ValueError):
+                pass
 
+
+def _guarda_equips_posicio_fase(request, jugador, fase, posicions):
+    PronosticEquipFase.objects.filter(jugador=jugador, fase=fase).delete()
     for posicio in posicions:
         equip_id = request.POST.get(f'equip_{posicio}')
         if equip_id:
