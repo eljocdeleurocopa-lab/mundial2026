@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/estil_usuaris.css" %}">
 <style>
 #classificacio_taula {
-    width: 800px;
+    width: 850px;
     margin: auto;
     margin-top: 40px;
     clear: both;
@@ -32,22 +32,22 @@
 #classificacio_taula td.nom {
     text-align: left;
 }
+#classificacio_taula td.nom a {
+    font-family: Verdana;
+    font-size: 12px;
+    color: #000;
+    text-decoration: none;
+}
+#classificacio_taula td.nom a:hover {
+    text-decoration: underline;
+}
 .fila_normal { background-color: #eeeeee; }
 .fila_jo { background-color: #cccccc; font-weight: bold; }
-.fletxa_amunt {
-    color: green;
-    font-weight: bold;
-    font-size: 13px;
-}
-.fletxa_avall {
-    color: red;
-    font-weight: bold;
-    font-size: 13px;
-}
-.fletxa_igual {
-    color: #666;
-    font-weight: bold;
-}
+.fletxa_amunt { color: green; font-weight: bold; font-size: 13px; }
+.fletxa_avall { color: red; font-weight: bold; font-size: 13px; }
+.fletxa_igual { color: #666; font-weight: bold; }
+.punts_amunt { color: green; font-size: 11px; }
+.punts_avall { color: red; font-size: 11px; }
 .ultima_actualitzacio {
     text-align: center;
     font-family: Verdana;
@@ -75,6 +75,7 @@
     <th>▲▼</th>
     <th>Jugador</th>
     <th>Punts</th>
+    <th>Dif.</th>
     <th>Partits</th>
     <th>Grups</th>
     <th>Emparell.</th>
@@ -91,8 +92,21 @@
         <span class="fletxa_igual">=</span>
       {% endif %}
     </td>
-    <td class="nom">{{ jugador.usuari.first_name|default:jugador.usuari.username }}</td>
+    <td class="nom">
+      <a href="{% url 'joc:consulta' %}?usuari={{ jugador.id }}">
+        {{ jugador.usuari.username }}
+      </a>
+    </td>
     <td><strong>{{ jugador.punts }}</strong></td>
+    <td>
+      {% if jugador.dif_punts > 0 %}
+        <span class="punts_amunt">▲{{ jugador.dif_punts }}</span>
+      {% elif jugador.dif_punts < 0 %}
+        <span class="punts_avall">▼{{ jugador.dif_punts|cut:"-" }}</span>
+      {% else %}
+        <span class="fletxa_igual">=</span>
+      {% endif %}
+    </td>
     <td>{{ jugador.punts_resultats }}</td>
     <td>{{ jugador.punts_grups }}</td>
     <td>{{ jugador.punts_equips_encertats }}</td>
