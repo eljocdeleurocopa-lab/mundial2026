@@ -162,7 +162,7 @@ def resseta_partits(modeladmin, request, queryset):
     Útil per ressetar els partits eliminatoris després d'una simulació.
     """
     count = queryset.count()
-    queryset.update(gols1=-1, gols2=-1, empat=None, equip1=None, equip2=None)
+    queryset.update(gols1=-1, gols2=-1, empat=None)
     # Esborrem també els PronosticPartit associats
     PronosticPartit.objects.filter(partit__in=queryset).delete()
     modeladmin.message_user(
@@ -179,7 +179,7 @@ def resseta_tots_eliminatoris(modeladmin, request, queryset):
     partits = Partit.objects.filter(pk__gte=73)
     count = partits.count()
     PronosticPartit.objects.filter(partit__in=partits).delete()
-    partits.update(gols1=-1, gols2=-1, empat=None, equip1=None, equip2=None)
+    partits.update(gols1=-1, gols2=-1, empat=None)
     modeladmin.message_user(
         request,
         f'{count} partits eliminatoris ressetats completament.'
