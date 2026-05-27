@@ -155,8 +155,39 @@ admin.site.register(Estadi, EstadiAdmin)
 # PARTIT
 # =============================================================================
 
+@admin.action(description='Ressetar gols i equips dels partits seleccionats')
+def resseta_partits(modeladmin, request, queryset):
+    """
+    Resseta els gols i equips dels partits seleccionats.
+    Útil per ressetar els partits eliminatoris després d'una simulació.
+    """
+    count = queryset.count()
+    queryset.update(gols1=-1, gols2=-1, empat=None)
+    # Esborrem també els PronosticPartit associats
+    PronosticPartit.objects.filter(partit__in=queryset).delete()
+    modeladmin.message_user(
+        request,
+        f'{count} partits ressetats (gols, equips i pronòstics eliminats).'
+    )
+
+
+@admin.action(description='Ressetar TOTS els partits eliminatoris (73-104)')
+def resseta_tots_eliminatoris(modeladmin, request, queryset):
+    """
+    Resseta tots els partits eliminatoris independentment de la selecció.
+    """
+    partits = Partit.objects.filter(pk__gte=73)
+    count = partits.count()
+    PronosticPartit.objects.filter(partit__in=partits).delete()
+    partits.update(gols1=-1, gols2=-1, empat=None)
+    modeladmin.message_user(
+        request,
+        f'{count} partits eliminatoris ressetats completament.'
+    )
+
+
 class PartitAdmin(admin.ModelAdmin):
-    actions = [recalcula_totes_puntuacions]  # recàlcul manual des de la llista
+    actions = [recalcula_totes_puntuacions, resseta_partits, resseta_tots_eliminatoris]
     list_display  = [
         'id', 'grup', 'diaihora', 'equip1', 'get_resultat', 'equip2',
         'empat', 'estadi', 'get_jugat',
@@ -214,10 +245,10 @@ class PronosticPartitAdmin(admin.ModelAdmin):
     raw_id_fields = ['jugador', 'partit', 'equip1', 'equip2']
 
     def has_add_permission(self, request):
-        return False  # els pronòstics els creen els jugadors
+        return False
 
     def has_change_permission(self, request, obj=None):
-        return False  # no es poden modificar
+        return False
 
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser

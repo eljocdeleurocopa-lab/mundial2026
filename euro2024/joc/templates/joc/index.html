@@ -7,15 +7,24 @@
 
 {% block nav %}
 <ul class="nav">
-    <li>{% block nav-pronostic %}<a class="indexButton" href="{% url 'joc:pronostic' %}">{% trans "Fes el pronòstic" %}</a>{% endblock %}</li>
-    <li>{% block nav-consulta %}<a class="indexButton" href="{% url 'joc:consulta' %}">{% trans "Consulta el teu pronòstic" %}</a>{% endblock %}</li>
-    {% if pronostic_acabat %}
-    <li>{% block nav-consulta-grups %}<a class="indexButton" href="{% url 'joc:consulta_grups' %}">{% trans "Consulta els teus grups " %}</a>{% endblock %}</li>
+    {% if fase_mundial == 'pronostics' %}
+        <li><a class="indexButton" href="{% url 'joc:pronostic' %}">{% trans "Fes el pronòstic" %}</a></li>
+        <li><a class="indexButton" href="{% url 'joc:consulta' %}">{% trans "Consulta el teu pronòstic" %}</a></li>
+        {% if pronostic_acabat %}
+        <li><a class="indexButton" href="{% url 'joc:consulta_grups' %}">{% trans "Consulta els teus grups" %}</a></li>
+        {% endif %}
+        <li><a class="indexButton" href="{% url 'joc:usuaris' %}">{% trans "Llistat d'usuaris" %}</a></li>
+        <li><a class="indexButton" href="{% url 'joc:puntuacions' %}">{% trans "Puntuacions" %}</a></li>
+    {% else %}
+        <li><a class="indexButton" href="{% url 'joc:classificacio' %}">{% trans "Classificació" %}</a></li>
+        <li><a class="indexButton" href="{% url 'joc:consulta' %}">{% trans "Consulta el teu pronòstic" %}</a></li>
+        {% if pronostic_acabat %}
+        <li><a class="indexButton" href="{% url 'joc:consulta_grups' %}">{% trans "Consulta els teus grups" %}</a></li>
+        {% endif %}
+        <li><a class="indexButton" href="{% url 'joc:usuaris' %}">{% trans "Llistat d'usuaris" %}</a></li>
+        <li><a class="indexButton" href="{% url 'joc:puntuacions' %}">{% trans "Puntuacions" %}</a></li>
     {% endif %}
-    <li>{% block nav-usuaris %}<a class="indexButton" href="{% url 'joc:usuaris' %}">{% trans "Llistat d'usuaris" %}</a>{% endblock %}</li>
-    <li>{% block nav-puntuacions %}<a class="indexButton" href="{% url 'joc:puntuacions' %}">{% trans "Puntuacions" %}</a>{% endblock %}</li>
 </ul>
 {% endblock %}
 
 {% endblock %}
-
