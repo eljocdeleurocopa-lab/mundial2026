@@ -112,8 +112,8 @@ def pronostic(request):
             _guarda_equips_posicio_fase(request, jugador, FASE_FINAL, [1, 2])
 
         # Creem els partits de la nova ronda si cal
-        if grup_actual in CREAR_PARTITS:
-            crea_partits(request, jugador, grup_actual)
+        if nom_grup in CREAR_PARTITS:
+            crea_partits(request, jugador, nom_grup)
 
         # Comprovem si hi ha tercers empatats (posició 8/9) — Mundial 2026
         if grup_actual in SETZENS:
