@@ -53,9 +53,9 @@ class JugadorAdmin(admin.ModelAdmin):
     actions = [approve_players, recalcula_puntuacions, recalcula_totes_puntuacions]
     list_display = [
         'usuari', 'get_first_name', 'get_is_active', 'get_date_joined',
-        'pagat', 'posicio', 'punts',
+        'pagat', 'lliga', 'posicio', 'punts',
     ]
-    list_filter  = ['usuari__is_active', 'pagat']
+    list_filter  = ['usuari__is_active', 'pagat', 'lliga']
     ordering     = ['posicio']
     readonly_fields = [
         'punts', 'punts_anterior', 'posicio', 'posicio_anterior',
@@ -66,7 +66,7 @@ class JugadorAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Usuari', {
-            'fields': ('usuari', 'pagat'),
+            'fields': ('usuari', 'pagat', 'lliga'),
         }),
         ('Rànquing', {
             'fields': ('posicio', 'posicio_anterior', 'punts', 'punts_anterior'),
@@ -157,25 +157,17 @@ admin.site.register(Estadi, EstadiAdmin)
 
 @admin.action(description='Ressetar gols i equips dels partits seleccionats')
 def resseta_partits(modeladmin, request, queryset):
-    """
-    Resseta els gols i equips dels partits seleccionats.
-    Útil per ressetar els partits eliminatoris després d'una simulació.
-    """
     count = queryset.count()
-    queryset.update(gols1=-1, gols2=-1, empat=None)
-    # Esborrem també els PronosticPartit associats
     PronosticPartit.objects.filter(partit__in=queryset).delete()
+    queryset.update(gols1=-1, gols2=-1, empat=None)
     modeladmin.message_user(
         request,
-        f'{count} partits ressetats (gols, equips i pronòstics eliminats).'
+        f'{count} partits ressetats (gols i pronòstics eliminats).'
     )
 
 
 @admin.action(description='Ressetar TOTS els partits eliminatoris (73-104)')
 def resseta_tots_eliminatoris(modeladmin, request, queryset):
-    """
-    Resseta tots els partits eliminatoris independentment de la selecció.
-    """
     partits = Partit.objects.filter(pk__gte=73)
     count = partits.count()
     PronosticPartit.objects.filter(partit__in=partits).delete()
@@ -224,7 +216,6 @@ class PartitAdmin(admin.ModelAdmin):
         return '-'
 
     def save_model(self, request, obj, form, change):
-        """En guardar un resultat real, recalcula els punts de tots els jugadors."""
         super().save_model(request, obj, form, change)
         if obj.gols1 >= 0 and obj.gols2 >= 0:
             recalcula_totes_puntuacions(self, request, queryset=None)
@@ -234,7 +225,7 @@ admin.site.register(Partit, PartitAdmin)
 
 
 # =============================================================================
-# PRONÒSTIC DE PARTIT (només lectura per a l'admin, útil per consultes)
+# PRONÒSTIC DE PARTIT
 # =============================================================================
 
 class PronosticPartitAdmin(admin.ModelAdmin):

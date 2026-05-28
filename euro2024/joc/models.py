@@ -12,6 +12,7 @@ from django_registration.signals import user_registered
 class Jugador(models.Model):
     usuari           = models.OneToOneField(User, on_delete=models.CASCADE)
     pagat            = models.BooleanField(default=False)
+    lliga = models.CharField(max_length=64, blank=True, default='')
     posicio          = models.SmallIntegerField()
     posicio_anterior = models.SmallIntegerField()
 
