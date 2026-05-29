@@ -5,7 +5,17 @@
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/estil_pronostic.css" %}">
+<style>
+.ultim_partit {
+    background-color: #fffbcc !important;
+    border-left: 4px solid #f0a500;
+}
+.ultim_partit td {
+    background-color: #fffbcc !important;
+}
+</style>
 {% endblock stylesheets %}
+
 {% block scripts %}
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/underscore@1.13.0/underscore-umd-min.js"></script>
 {% endblock scripts %}
@@ -19,6 +29,13 @@
 
 {% block content %}
 <div id="llistat">
+
+{% if nom_usuari %}
+<p style="text-align:center; font-family:Verdana; font-size:14px; font-weight:bold; margin-bottom:10px;">
+  Pronòstic de: {{ nom_usuari }}
+</p>
+{% endif %}
+
 <table width="100%">
 <tr>
 <td class="titol_llistat">Grup</td>
@@ -30,7 +47,7 @@
 <td class="titol_llistat">Estadi</td>
 </tr>
 {% for pronostic in pronostics %}
-<tr class="linia_usuaris">
+<tr class="linia_usuaris {% if pronostic.partit.id == ultim_partit_id %}ultim_partit{% endif %}">
 <td align="center">{{ pronostic.partit.grup.nom }}</td>
 <td>{{ pronostic.partit.diaihora }}</td>
 {% if pronostic.empat == 1 or pronostic.gols1 > pronostic.gols2 %}
