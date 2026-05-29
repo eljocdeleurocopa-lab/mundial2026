@@ -12,7 +12,6 @@ from django_registration.signals import user_registered
 class Jugador(models.Model):
     usuari           = models.OneToOneField(User, on_delete=models.CASCADE)
     pagat            = models.BooleanField(default=False)
-    lliga = models.CharField(max_length=64, blank=True, default='')
     posicio          = models.SmallIntegerField()
     posicio_anterior = models.SmallIntegerField()
 
@@ -279,6 +278,22 @@ def user_registered_callback(sender, user, request, **kwargs):
         usuari=user,
         posicio=user.id,
         posicio_anterior=user.id,
+    )
+    # Notificació a l'admin quan es registra un nou jugador
+    from django.core.mail import send_mail
+    from django.conf import settings as django_settings
+    send_mail(
+        subject=f'Nou jugador registrat: {user.username}',
+        message=(
+            f"S'ha registrat un nou jugador al Joc del Mundial 2026:\n\n"
+            f"Nom d'usuari: {user.username}\n"
+            f"Nom real: {user.first_name} {user.last_name}\n"
+            f"Correu: {user.email}\n\n"
+            f"Recorda assignar-li la lliga des de l'administrador."
+        ),
+        from_email=django_settings.DEFAULT_FROM_EMAIL,
+        recipient_list=['eljocdelmundial@gmail.com'],
+        fail_silently=True,
     )
 
 user_registered.connect(user_registered_callback)
