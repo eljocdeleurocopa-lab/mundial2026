@@ -24,13 +24,13 @@ urlpatterns = [
     path('puntuacions', views.puntuacions, name='puntuacions'),
 ]
 
-if FASE_MUNDIAL == 'pronostics':
-    # Només abans de l'11 de juny
-    urlpatterns += [
-        path('pronostic', views.pronostic, name='pronostic'),
-    ]
-else:
-    # Només durant el Mundial
+# /pronostic sempre disponible — la vista controla qui hi pot accedir
+urlpatterns += [
+    path('pronostic', views.pronostic, name='pronostic'),
+]
+
+if FASE_MUNDIAL != 'pronostics':
+    # Durant el Mundial, afegim la classificació
     urlpatterns += [
         path('classificacio', login_required(ClassificacioView.as_view()), name='classificacio'),
     ]
