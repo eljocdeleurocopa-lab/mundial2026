@@ -243,20 +243,22 @@ def crea_setzens(request, jugador, admin=False):
 
     # Assignació dels tercers als partits corresponents seguint l'ordre de prioritat FIFA
     # (prioritat: el tercer del grup amb millor classificació va al primer partit elegible)
+    # IMPORTANT: només usem els 8 millors tercers, no tots els 12
     tercers_assignats = set()
 
     for id_nou, (primer, grups_elegibles) in EMPARELLAMENTS_SETZENS_AMB_TERCERS.items():
         # Busquem el millor tercer no assignat dels grups elegibles
+        # Iterem NOMÉS sobre els 8 millors tercers
         tercer_elegit = None
-        for tercer in tercers_ordenats:
+        for tercer in millors_tercers:
             nom_grup_tercer = tercer.equip.grup.nom
             if nom_grup_tercer in grups_elegibles and nom_grup_tercer not in tercers_assignats:
                 tercer_elegit = tercer
                 break
 
         if tercer_elegit is None:
-            # Fallback: agafem qualsevol tercer no assignat
-            for tercer in tercers_ordenats:
+            # Fallback: qualsevol dels 8 millors no assignat
+            for tercer in millors_tercers:
                 if tercer.equip.grup.nom not in tercers_assignats:
                     tercer_elegit = tercer
                     break
