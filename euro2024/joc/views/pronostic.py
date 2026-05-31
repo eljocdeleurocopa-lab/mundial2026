@@ -12,6 +12,7 @@ from joc.utils import (
     GUARDA_GRUPS, FASE_GRUPS, ACABA_PRONOSTIC,
     SETZENS, VUITENS, QUARTS, SEMIS, TERCER, FINAL,
     TEXT_GRUP, crea_partits, comprova_tercers, guarda_classificacio_grup, CREAR_PARTITS,
+    pronostics_oberts,
 )
 
 
@@ -65,8 +66,15 @@ GrupForm = forms.modelformset_factory(PronosticPartit, form=PartitForm, extra=0)
 
 @login_required
 def pronostic(request):
+    from django.conf import settings as django_settings
     jugador = Jugador.objects.get(usuari=request.user)
     nom_grup = request.GET.get('grup', 'A')
+
+    # Flanders (admin) sempre pot accedir a /pronostic
+    # Els altres jugadors només si els pronòstics estan oberts
+    es_admin = (jugador.id == django_settings.ID_ADMIN)
+    if not pronostics_oberts() and not es_admin:
+        return redirect('/')
 
     # --- POST: guardem els valors del formulari ---
     if request.method == 'POST':
@@ -85,27 +93,17 @@ def pronostic(request):
             guarda_classificacio_grup(request, jugador)
 
         # Guardem pronòstics d'equips classificats (rondes eliminatòries)
-        # participant_X = tots els equips de la fase actual
-        # equip_X = guanyadors (equips que passen a la fase seguent)
         if grup_actual in SETZENS:
-            # 32 participants als setzens
             _guarda_equips_fase_participants(request, jugador, FASE_SETZENS, 32)
-            # 16 guanyadors dels setzens -> passen als vuitens
             _guarda_equips_fase(request, jugador, FASE_VUITENS, 16)
         elif grup_actual in VUITENS:
-            # 16 participants als vuitens
             _guarda_equips_fase_participants(request, jugador, FASE_VUITENS, 16)
-            # 8 guanyadors dels vuitens -> passen als quarts
             _guarda_equips_fase(request, jugador, FASE_QUARTS, 8)
         elif grup_actual in QUARTS:
-            # 8 participants als quarts
             _guarda_equips_fase_participants(request, jugador, FASE_QUARTS, 8)
-            # 4 guanyadors dels quarts -> passen a semis
             _guarda_equips_fase(request, jugador, FASE_SEMIS, 4)
         elif grup_actual in SEMIS:
-            # 4 participants a semis
             _guarda_equips_fase_participants(request, jugador, FASE_SEMIS, 4)
-            # els guanyadors/perdedors es guarden via TERCER i FINAL
         elif grup_actual in TERCER:
             _guarda_equips_posicio_fase(request, jugador, FASE_TERCER, [3, 4])
         elif grup_actual in FINAL:
@@ -115,8 +113,9 @@ def pronostic(request):
         if nom_grup in CREAR_PARTITS:
             crea_partits(request, jugador, nom_grup)
 
-        # Comprovem si hi ha tercers empatats (posició 8/9) — Mundial 2026
-        if grup_actual in SETZENS:
+        # Comprovem si hi ha tercers empatats (posició 8/9) — al final de la fase de grups
+        # nom_grup='M' vol dir que acabem de passar l'últim grup (L) i anem als setzens
+        if nom_grup in SETZENS:
             tercers_empatats = comprova_tercers(request, jugador)
             if tercers_empatats:
                 grup = Grup.objects.get(nom='L')
@@ -147,7 +146,6 @@ def pronostic(request):
     grup = Grup.objects.get(nom=nom_grup)
 
     # Si és una ronda eliminatòria (no setzens), recalculem els partits
-    # per si el jugador ha tornat enrere i modificat resultats anteriors
     if nom_grup in CREAR_PARTITS and nom_grup not in SETZENS:
         try:
             crea_partits(request, jugador, nom_grup)

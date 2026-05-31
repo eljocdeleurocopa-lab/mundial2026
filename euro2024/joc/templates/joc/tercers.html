@@ -5,28 +5,27 @@
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/estil_grup.css" %}">
-{% if not equips_classificacio %}
-<link rel="stylesheet" type="text/css" href="{% static "css/estil_eliminatoria.css" %}">
-{% endif %}
 {% endblock stylesheets %}
 
-{% block title %}Entrada dels resultats - {{ text_grup}}{% endblock %}
+{% block title %}Tercers empatats{% endblock %}
 
 {% block navegacio %}
 &nbsp;&nbsp;&gt;&nbsp;&nbsp;
 <a href="{% url 'joc:pronostic' %}">Entrada de Resultats</a>
 &nbsp;&nbsp;&gt;&nbsp;&nbsp;
-<a href="{% url 'joc:pronostic' %}?grup={{ grup }}">{{ text_grup }}</a>
+Tercers empatats
 {% endblock navegacio %}
 
 {% block content %}
 
 <h4>
-El teu pronòstic conté un empat entre els 4 millors tercers la fase de grups!
+Hi ha un empat entre els tercers classificats en les posicions 8 i 9!
 </h4>
 <div id="avis">
-Si canvies algun resultat és possible que desfacis aquest empat.<br>
-Si no, pots continuar i la màquina escollirà aleatòriament quins dels equips empatats passen a vuitens de final.
+Els 8 millors tercers passen als setzens de final. Com que hi ha un empat en la posició de tall,
+el sistema no pot determinar automàticament quins equips passen.<br><br>
+Pots tornar enrere i canviar algun resultat per desfer l'empat, o continuar i el sistema
+escollirà aleatòriament quin dels equips empatats passa als setzens de final.
 </div>
 <br><br>
 <div id="classificacio_tercers">
@@ -44,7 +43,7 @@ Si no, pots continuar i la màquina escollirà aleatòriament quins dels equips 
 {% for tercer in tercers %}
 <tr>
 <td><a href="{% url 'joc:pronostic' %}?grup={{ tercer.equip.grup.nom }}">{{ tercer.equip.grup.nom }}</a></td>
-<td class="class_bandera"><img name="ban{{ forloop.counter0 }}" src="{% with 'banderes/'|add:tercer.equip.bandera as bandera %}{% static bandera %}{% endwith %}" height="{{ height_banderes }}" width="{{ width_banderes }}" border="{{ border_banderes }}"></td>
+<td class="class_bandera"><img src="{% with 'banderes/'|add:tercer.equip.bandera as bandera %}{% static bandera %}{% endwith %}" height="{{ height_banderes }}" width="{{ width_banderes }}" border="{{ border_banderes }}"></td>
 <td class="classif"><a href="{% url 'joc:pronostic' %}?grup={{ tercer.equip.grup.nom }}">{{ tercer.equip.nom }}</a></td>
 <td align="center" class="classif">{{ tercer.punts }}</td>
 <td align="center" class="classif">{{ tercer.diferencia }}</td>
@@ -58,7 +57,7 @@ Si no, pots continuar i la màquina escollirà aleatòriament quins dels equips 
 <div class="boto_next">
 <form action="{% url 'joc:pronostic' %}" method="get">
 <input name="seguent" type="submit" class="boto_index" value="Continua">
-<input name="grup" type="hidden" value="G">
+<input name="grup" type="hidden" value="M">
 </form>
 </div>
 
