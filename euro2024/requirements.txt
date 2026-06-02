@@ -14,3 +14,4 @@ uWSGI
 # gettext
 gunicorn
 whitenoise
+openpyxl
