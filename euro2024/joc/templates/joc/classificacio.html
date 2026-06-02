@@ -78,7 +78,7 @@
     <th>Dif.</th>
     <th>Partits</th>
     <th>Grups</th>
-    <th>Emparell.</th>
+    <th>Equips</th>
   </tr>
   {% for jugador in object_list %}
   <tr class="{% if jugador.usuari == request.user %}fila_jo{% else %}fila_normal{% endif %}">
@@ -107,9 +107,9 @@
         <span class="fletxa_igual">=</span>
       {% endif %}
     </td>
-    <td>{{ jugador.punts_resultats }}</td>
+    <td>{{ jugador.punts_resultats|add:jugador.punts_setzens|add:jugador.punts_vuitens|add:jugador.punts_quarts|add:jugador.punts_semis|add:jugador.punts_tercer|add:jugador.punts_final }}</td>
     <td>{{ jugador.punts_grups }}</td>
-    <td>{{ jugador.punts_equips_encertats }}</td>
+    <td>{{ jugador.punts_equips_encertats|add:jugador.punts_quadre_final }}</td>
   </tr>
   {% endfor %}
 </table>

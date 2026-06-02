@@ -12,3 +12,7 @@ urlpatterns = [
     path('registration/', include('django.contrib.auth.urls')),
 ]
 
+from joc.views.exporta_pronostics import exporta_pronostics
+
+# A urlpatterns:
+path('admin/exporta-pronostics/', exporta_pronostics, name='exporta_pronostics'),
