@@ -172,7 +172,8 @@ class Partit(models.Model):
     # empat: en rondes eliminatòries, quin equip guanya per penals/pròrroga
     # 1 = guanya equip1, 2 = guanya equip2
     empat     = models.PositiveSmallIntegerField(null=True, blank=True, default=None)
-
+    notes = models.TextField(blank=True, default='')
+    
     def signe(self):
         """Signe del resultat als 90 minuts (1=local, 2=visitant, 0=empat)."""
         if self.gols1 > self.gols2:
