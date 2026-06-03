@@ -192,7 +192,7 @@ class PartitAdmin(admin.ModelAdmin):
         'grup', 'diaihora', 'estadi',
         'equip1', 'gols1',
         'equip2', 'gols2',
-        'empat',
+        'empat', 'notes',
     ]
 
     @admin.display(description='Resultat')
@@ -208,7 +208,7 @@ class PartitAdmin(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
             'id', 'grup', 'diaihora', 'equip1', 'gols1',
-            'get_guio', 'gols2', 'equip2', 'empat', 'get_jugat',
+            'get_guio', 'gols2', 'equip2', 'empat', 'get_jugat', 'notes'
         ]
 
     @admin.display(description='-')
