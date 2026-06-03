@@ -160,11 +160,15 @@ def pronostic(request):
     partits = Partit.objects.filter(grup=grup).order_by("diaihora")
 
     for partit in partits:
-        items = {}
+        defaults = {}
         if nom_grup in FASE_GRUPS:
-            items['equip1'] = partit.equip1
-            items['equip2'] = partit.equip2
-        PronosticPartit.objects.get_or_create(jugador=jugador, partit=partit, **items)
+            defaults['equip1'] = partit.equip1
+            defaults['equip2'] = partit.equip2
+        PronosticPartit.objects.get_or_create(
+            jugador=jugador,
+            partit=partit,
+            defaults=defaults,
+        )
 
     grup_form = GrupForm(
         queryset=PronosticPartit.objects.filter(
